@@ -1,28 +1,640 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8" />
-  <title>Pursuit Blog&#39;s</title>
-  <link rel="icon" href="favicon.ico"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="/css/ionicons.min.css">
-  <link rel="stylesheet" href="/css/milligram.min.css">
-  <link rel="stylesheet" href="/css/comfortaa.css">
-  <link rel="stylesheet" href="/css/source-sans-pro.css">
-  <link rel="stylesheet" href="/css/animate.min.css">
-  <link rel="stylesheet" href="/css/nprogress.css">
-  <link rel="stylesheet" href="/css/loaders.min.css">
-  <link rel="stylesheet" href="/css/atom-one-light.css">
-  <link rel="stylesheet" href="/css/app.css">
+  <meta charset="utf-8">
+  
+  <title>Fastdfs安装配置 | Pursuit Blog&#39;s</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Fastdfs安装配置 项目地址：https://github.com/happyfish100  实验环境 ###安装前所有节点均需 iptables -F setenforce 0 yum -y install gcc perl yum -y install pcre-devel openssl-devel yum">
+<meta name="keywords" content="分布式文件系统,Fastdfs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fastdfs安装配置">
+<meta property="og:url" content="https://shensir.info/2017/06/12/Fastdfs安装配置/index.html">
+<meta property="og:site_name" content="Pursuit Blog&#39;s">
+<meta property="og:description" content="Fastdfs安装配置 项目地址：https://github.com/happyfish100  实验环境 ###安装前所有节点均需 iptables -F setenforce 0 yum -y install gcc perl yum -y install pcre-devel openssl-devel yum -y install ntp ntpdate time1.aliyun.com">
+<meta property="og:image" content="http://omsab2via.bkt.clouddn.com/fastdfs.png">
+<meta property="og:updated_time" content="2017-11-19T13:15:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Fastdfs安装配置">
+<meta name="twitter:description" content="Fastdfs安装配置 项目地址：https://github.com/happyfish100  实验环境 ###安装前所有节点均需 iptables -F setenforce 0 yum -y install gcc perl yum -y install pcre-devel openssl-devel yum -y install ntp ntpdate time1.aliyun.com">
+<meta name="twitter:image" content="http://omsab2via.bkt.clouddn.com/fastdfs.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Pursuit Blog&#39;s" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
 </head>
+
 <body>
-  <div id="app"></div>
-  <script type="text/javascript">
-    window.root = "/"
-  </script>
-  <script src="/js/manifest.js"></script>
-  <script src="/js/vendor.js"></script>
-  <script src="/js/app.js"></script>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Pursuit Blog&#39;s</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://shensir.info"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Fastdfs安装配置" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/12/Fastdfs安装配置/" class="article-date">
+  <time datetime="2017-06-12T13:28:08.000Z" itemprop="datePublished">2017-06-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Fastdfs安装配置
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Fastdfs安装配置"><a href="#Fastdfs安装配置" class="headerlink" title="Fastdfs安装配置"></a>Fastdfs安装配置</h2><blockquote>
+<p>项目地址：<a href="https://github.com/happyfish100" target="_blank" rel="noopener">https://github.com/happyfish100</a></p>
+</blockquote>
+<h3 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h3><p><img src="http://omsab2via.bkt.clouddn.com/fastdfs.png" alt="enter image description here"></p>
+<p>###安装前<br>所有节点均需</p>
+<pre><code>iptables -F
+setenforce 0
+yum -y install gcc perl
+yum -y install pcre-devel openssl-devel
+yum -y install ntp
+ntpdate time1.aliyun.com
+</code></pre><h3 id="71配置"><a href="#71配置" class="headerlink" title="71配置"></a>71配置</h3><pre><code>git clone https://github.com/happyfish100/fastdfs.git
+git clone https://github.com/happyfish100/libfastcommon.git
+</code></pre><p>分别cd进去./make.sh &amp;&amp; ./make install<br>复制配置文件至指定目录</p>
+<pre><code>cd /root/fastdfs/conf
+cp {http.conf,mime.types，anti-steal.jpg} /etc/fdfs/
+</code></pre><p>准备配置文件</p>
+<pre><code>cd /etc/fdfs
+cp tracker.conf.sample tracker.conf
+[root@71 fdfs]# cat tracker.conf |grep -v &#39;^#&#39;|grep -v &quot;^$&quot;
+disabled=false
+bind_addr=
+port=22122
+connect_timeout=30
+network_timeout=60
+base_path=/fastdfs        #程序目录，需手动创建
+max_connections=256
+accept_threads=1
+work_threads=4
+min_buff_size = 8KB
+max_buff_size = 128KB
+store_lookup=0            #这里0表示轮询下面两个组
+store_group=group0
+store_group=group1
+store_server=0
+store_path=0
+download_server=0
+reserved_storage_space = 10%
+log_level=info
+run_by_group=
+run_by_user=
+allow_hosts=*
+sync_log_buff_interval = 10
+check_active_interval = 120
+thread_stack_size = 64KB
+storage_ip_changed_auto_adjust = true
+storage_sync_file_max_delay = 86400
+storage_sync_file_max_time = 300
+use_trunk_file = false 
+slot_min_size = 256
+slot_max_size = 16MB
+trunk_file_size = 64MB
+trunk_create_file_advance = false
+trunk_create_file_time_base = 02:00
+trunk_create_file_interval = 86400
+trunk_create_file_space_threshold = 20G
+trunk_init_check_occupying = false
+trunk_init_reload_from_binlog = false
+trunk_compress_binlog_min_interval = 0
+use_storage_id = false
+storage_ids_filename = storage_ids.conf
+id_type_in_filename = ip
+store_slave_file_use_link = false
+rotate_error_log = false
+error_log_rotate_time=00:00
+rotate_error_log_size = 0
+log_file_keep_days = 0
+use_connection_pool = false
+connection_pool_max_idle_time = 3600
+http.server_port=80
+http.check_alive_interval=30
+http.check_alive_type=tcp
+http.check_alive_uri=/status.html
+</code></pre><p>安装完成后会自动创建unit file,所以<br>service fdfs_trackerd start</p>
+<p>nginx配置</p>
+<pre><code>yum -y Install nginx
+在nginx.conf server配置段中加入
+    upstream fastdfs0 {
+        server 172.18.50.72;
+        server 172.18.50.73;
+    }
+
+    upstream fastdfs1 {
+        server 172.18.50.62;
+        server 172.18.50.63;
+    }
+default.conf中加入
+    location /group0/M00 {
+        proxy_pass http://fastdfs0;
+    }
+    location /group1/M00 {
+        proxy_pass http://fastdfs1;
+    }
+</code></pre><p>###72配置</p>
+<pre><code>git clone https://github.com/happyfish100/fastdfs.git
+git clone https://github.com/happyfish100/libfastcommon.git
+</code></pre><p>分别cd进去./make.sh &amp;&amp; ./make install<br>复制配置文件至指定目录</p>
+<pre><code>cd /root/fastdfs/conf
+cp {http.conf,mime.types，anti-steal.jpg} /etc/fdfs/
+</code></pre><p>####准备配置文件</p>
+<pre><code>mkdir -pv /data/fastdfs
+cd /etc/fdfs/
+cp storage.conf.sample storage.conf
+[root@72 fdfs]# cat /etc/fdfs/storage.conf|grep -Ev &quot;^(#|$)&quot;
+disabled=false
+group_name=group0            #组名
+bind_addr=
+client_bind=true
+port=23000
+connect_timeout=30
+network_timeout=60
+heart_beat_interval=30
+stat_report_interval=60
+base_path=/data/fastdfs
+max_connections=256
+buff_size = 256KB
+accept_threads=1
+work_threads=4
+disk_rw_separated = true
+disk_reader_threads = 1
+disk_writer_threads = 1
+sync_wait_msec=50
+sync_interval=0
+sync_start_time=00:00
+sync_end_time=23:59
+write_mark_file_freq=500
+store_path_count=1
+store_path0=/data/fastdfs            #数据存放目录
+subdir_count_per_path=256
+tracker_server=172.18.50.71:22122    #tracker节点
+log_level=info
+run_by_group=
+run_by_user=
+allow_hosts=*
+file_distribute_path_mode=0
+file_distribute_rotate_count=100
+fsync_after_written_bytes=0
+sync_log_buff_interval=10
+sync_binlog_buff_interval=10
+sync_stat_file_interval=300
+thread_stack_size=512KB
+upload_priority=10
+if_alias_prefix=
+check_file_duplicate=0
+file_signature_method=hash
+key_namespace=FastDFS
+keep_alive=0
+use_access_log = false
+rotate_access_log = false
+access_log_rotate_time=00:00
+rotate_error_log = false
+error_log_rotate_time=00:00
+rotate_access_log_size = 0
+rotate_error_log_size = 0
+log_file_keep_days = 0
+file_sync_skip_invalid_record=false
+use_connection_pool = false
+connection_pool_max_idle_time = 3600
+http.domain_name=
+http.server_port=80                ##http端口
+</code></pre><p>启动服务<br>service fdfs_storaged start</p>
+<p>####安装nginx进行反代<br>git clone <a href="https://github.com/happyfish100/fastdfs-nginx-module.git" target="_blank" rel="noopener">https://github.com/happyfish100/fastdfs-nginx-module.git</a><br>准备nginx源码包，我这里使用1.10.3版本</p>
+<pre><code>tar xvf nginx-1.10.3.tar.gz
+cd nginx-1.10.3
+./configure   --prefix=/usr   \
+--sbin-path=/usr/sbin/nginx   \
+--conf-path=/etc/nginx/nginx.conf   \
+--error-log-path=/var/log/nginx/error.log   \
+--http-log-path=/var/log/nginx/access.log   \
+--pid-path=/var/run/nginx/nginx.pid    \
+--lock-path=/var/lock/nginx.lock   \
+--user=nginx   \
+--group=nginx   \
+--with-http_ssl_module   \
+--with-http_flv_module  \
+--with-http_stub_status_module   \
+--with-http_gzip_static_module   \
+--http-client-body-temp-path=/var/tmp/nginx/client/   \
+--http-proxy-temp-path=/var/tmp/nginx/proxy/   \
+--http-fastcgi-temp-path=/var/tmp/nginx/fcgi/   \
+--http-uwsgi-temp-path=/var/tmp/nginx/uwsgi   \
+--http-scgi-temp-path=/var/tmp/nginx/scgi   \
+--with-pcre   \
+--with-debug   \
+--add-module=../fastdfs-nginx-module/src
+make &amp;&amp; make install
+</code></pre><p>修改配置文件，在nginx配置文件中加入</p>
+<pre><code>location /M00 {
+      root /data/fastdfs/data;
+      ngx_fastdfs_module;
+}
+</code></pre><p>添加unit file</p>
+<pre><code>vim /etc/init.d/nginx
+[root@72 fdfs]# cat /etc/init.d/nginx 
+#!/bin/sh
+#
+# nginx - this script starts and stops the nginx daemon
+#
+# chkconfig:   - 85 15 
+# description:  Nginx is an HTTP(S) server, HTTP(S) reverse \
+#               proxy and IMAP/POP3 proxy server
+# processname: nginx
+# config:      /etc/nginx/nginx.conf
+# config:      /etc/sysconfig/nginx
+# pidfile:     /var/run/nginx.pid
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+# Check that networking is up.
+[ &quot;$NETWORKING&quot; = &quot;no&quot; ] &amp;&amp; exit 0
+
+nginx=&quot;/usr/sbin/nginx&quot;
+prog=$(basename $nginx)
+
+NGINX_CONF_FILE=&quot;/etc/nginx/nginx.conf&quot;
+
+[ -f /etc/sysconfig/nginx ] &amp;&amp; . /etc/sysconfig/nginx
+
+lockfile=/var/lock/subsys/nginx
+
+make_dirs() {
+   # make required directories
+   user=`nginx -V 2&gt;&amp;1 | grep &quot;configure arguments:&quot; | sed &#39;s/[^*]*--user=\([^ ]*\).*/\1/g&#39; -`
+   options=`$nginx -V 2&gt;&amp;1 | grep &#39;configure arguments:&#39;`
+   for opt in $options; do
+       if [ `echo $opt | grep &#39;.*-temp-path&#39;` ]; then
+           value=`echo $opt | cut -d &quot;=&quot; -f 2`
+           if [ ! -d &quot;$value&quot; ]; then
+               # echo &quot;creating&quot; $value
+               mkdir -p $value &amp;&amp; chown -R $user $value
+           fi
+       fi
+   done
+}
+
+start() {
+    [ -x $nginx ] || exit 5
+    [ -f $NGINX_CONF_FILE ] || exit 6
+    make_dirs
+    echo -n $&quot;Starting $prog: &quot;
+    daemon $nginx -c $NGINX_CONF_FILE
+    retval=$?
+    echo
+    [ $retval -eq 0 ] &amp;&amp; touch $lockfile
+    return $retval
+}
+
+stop() {
+    echo -n $&quot;Stopping $prog: &quot;
+    killproc $prog -QUIT
+    retval=$?
+    echo
+    [ $retval -eq 0 ] &amp;&amp; rm -f $lockfile
+    return $retval
+}
+
+restart() {
+    configtest || return $?
+    stop
+    sleep 1
+    start
+}
+
+reload() {
+    configtest || return $?
+    echo -n $&quot;Reloading $prog: &quot;
+    killproc $nginx -HUP
+    RETVAL=$?
+    echo
+}
+
+force_reload() {
+    restart
+}
+
+configtest() {
+  $nginx -t -c $NGINX_CONF_FILE
+}
+
+rh_status() {
+    status $prog
+}
+
+rh_status_q() {
+    rh_status &gt;/dev/null 2&gt;&amp;1
+}
+
+case &quot;$1&quot; in
+    start)
+        rh_status_q &amp;&amp; exit 0
+        $1
+        ;;
+    stop)
+        rh_status_q || exit 0
+        $1
+        ;;
+    restart|configtest)
+        $1
+        ;;
+    reload)
+        rh_status_q || exit 7
+        $1
+        ;;
+    force-reload)
+        force_reload
+        ;;
+    status)
+        rh_status
+        ;;
+    condrestart|try-restart)
+        rh_status_q || exit 0
+            ;;
+    *)
+        echo $&quot;Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload|configtest}&quot;
+        exit 2
+esac
+</code></pre><p>将fastdnf配置文件复制到/etc/fdfs</p>
+<pre><code>cd /root/fastdfs-nginx-module/src
+cp mod_fastdfs.conf /etc/fdfs
+</code></pre><p>配置如下</p>
+<pre><code>[root@72 fdfs]# cat mod_fastdfs.conf | grep -Ev &quot;^(#|$)&quot;
+connect_timeout=2
+network_timeout=30
+base_path=/data/fastdfs/logs            #日志文件存放位置
+load_fdfs_parameters_from_tracker=true
+storage_sync_file_max_delay = 86400
+use_storage_id = false
+storage_ids_filename = storage_ids.conf
+tracker_server=172.18.50.71:22122        #tracker服务器地址
+storage_server_port=23000
+group_name=group0                        #组名
+url_have_group_name = true                #多组需开启，在url显示组名
+store_path_count=1
+store_path0=/data/fastdfs                #data目录
+log_level=info
+log_filename=
+response_mode=proxy
+if_alias_prefix=
+flv_support = true
+flv_extension = flv
+group_count = 0
+</code></pre><p>添加nginx用户</p>
+<pre><code>useradd -r nginx -s /sbin/nologin
+</code></pre><p>然后就可以启动服务了<br>创建链接文件<br>ln -s /data/fastdfs/data  /data/fastdfs/data/M00<br>然后重启nginx</p>
+<p>另外3台的配置除组名外基本一致，这里就不写了</p>
+<p>###测试<br>准备client<br>安装fastdfs<br>准备配置文件</p>
+<pre><code>[root@71 ~]# cat  /etc/fdfs/client.conf.sample |grep -Ev &quot;^(#|$)&quot;
+connect_timeout=30
+network_timeout=60
+base_path=/data/
+tracker_server=172.18.50.71:22122
+log_level=info
+use_connection_pool = false
+connection_pool_max_idle_time = 3600
+load_fdfs_parameters_from_tracker=false
+use_storage_id = false
+storage_ids_filename = storage_ids.conf
+http.tracker_server_port=80
+</code></pre><p>上传文件</p>
+<pre><code>[root@71 ~]# fdfs_upload_file /etc/fdfs/client.conf.sample a.txt 
+group0/M00/00/00/rBIySFk-i8iAXDN7AAAEXxgxbAk905.txt
+[root@71 ~]# fdfs_upload_file /etc/fdfs/client.conf.sample a.txt 
+group1/M00/00/00/rBIyP1k-i8iAUolVAAAEXxgxbAk832.txt
+</code></pre><p>访问测试</p>
+<pre><code>curl http://172.18.50.71/group1/M00/00/00/rBIyP1k-i8iAUolVAAAEXxgxbAk832.txt
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+halt:x:7:0:halt:/sbin:/sbin/halt
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+games:x:12:100:games:/usr/games:/sbin/nologin
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+nobody:x:99:99:Nobody:/:/sbin/nologin
+systemd-bus-proxy:x:999:997:systemd Bus Proxy:/:/sbin/nologin
+systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
+dbus:x:81:81:System message bus:/:/sbin/nologin
+polkitd:x:998:996:User for polkitd:/:/sbin/nologin
+tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
+postfix:x:89:89::/var/spool/postfix:/sbin/nologin
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin
+chrony:x:997:995::/var/lib/chrony:/sbin/nologin
+apache:x:48:48:Apache:/usr/share/httpd:/sbin/nologin
+nginx:x:996:994:nginx user:/var/cache/nginx:/sbin/nologin
+</code></pre><pre><code>curl http://172.18.50.71/group0/M00/00/00/rBIySFk-i8iAXDN7AAAEXxgxbAk905.txt
+curl http://172.18.50.71/group1/M00/00/00/rBIyP1k-i8iAUolVAAAEXxgxbAk832.txt
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+halt:x:7:0:halt:/sbin:/sbin/halt
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+games:x:12:100:games:/usr/games:/sbin/nologin
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+nobody:x:99:99:Nobody:/:/sbin/nologin
+systemd-bus-proxy:x:999:997:systemd Bus Proxy:/:/sbin/nologin
+systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
+dbus:x:81:81:System message bus:/:/sbin/nologin
+polkitd:x:998:996:User for polkitd:/:/sbin/nologin
+tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
+postfix:x:89:89::/var/spool/postfix:/sbin/nologin
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin
+chrony:x:997:995::/var/lib/chrony:/sbin/nologin
+apache:x:48:48:Apache:/usr/share/httpd:/sbin/nologin
+nginx:x:996:994:nginx user:/var/cache/nginx:/sbin/nologin
+</code></pre><h3 id="一些注意的地方"><a href="#一些注意的地方" class="headerlink" title="一些注意的地方"></a>一些注意的地方</h3><p>72 73两台centos7.3在修改/etc/fdfs/mod_fastdfs.conf<br>url_have_group_name = true后配置nginx反代<br>location /group0/M00 {<br>            root /data/fastdfs/data;<br>            ngx_fastdfs_module;<br>        }<br> 后无法访问<br> 需要在数据存放目录建立一个group0的软连接，而62 、63的cent6.8则一切正常。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shensir.info/2017/06/12/Fastdfs安装配置/" data-id="cjb05gx4k000286zulq20fgth" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Fastdfs/">Fastdfs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/06/12/Maradb主从复制/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Maradb主从复制</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP-HEADER/">HTTP HEADER</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Haproxy/">Haproxy</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Keepalived/">Keepalived</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tomcat/">Tomcat</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ca/">Ca</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fastdfs/">Fastdfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP-HEADER/">HTTP HEADER</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Haproxy/">Haproxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Http/">Http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Httpd/">Httpd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Iptables/">Iptables</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keepalived/">Keepalived</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maradb/">Maradb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mariadb/">Mariadb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MogileFS/">MogileFS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Notes/">Notes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ProxySQL/">ProxySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bind/">bind</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/keepalived/">keepalived</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lvs/">lvs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/modules/">modules</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nfs/">nfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/session/">session</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中间件/">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/主从复制/">主从复制</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基础命令/">基础命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文件共享/">文件共享</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/负载均衡/">负载均衡</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Ca/" style="font-size: 10px;">Ca</a> <a href="/tags/Fastdfs/" style="font-size: 10px;">Fastdfs</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/HTTP-HEADER/" style="font-size: 10px;">HTTP HEADER</a> <a href="/tags/Haproxy/" style="font-size: 10px;">Haproxy</a> <a href="/tags/Http/" style="font-size: 13.33px;">Http</a> <a href="/tags/Httpd/" style="font-size: 10px;">Httpd</a> <a href="/tags/Https/" style="font-size: 13.33px;">Https</a> <a href="/tags/Iptables/" style="font-size: 10px;">Iptables</a> <a href="/tags/Keepalived/" style="font-size: 10px;">Keepalived</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Maradb/" style="font-size: 10px;">Maradb</a> <a href="/tags/Mariadb/" style="font-size: 13.33px;">Mariadb</a> <a href="/tags/MogileFS/" style="font-size: 10px;">MogileFS</a> <a href="/tags/Notes/" style="font-size: 13.33px;">Notes</a> <a href="/tags/ProxySQL/" style="font-size: 10px;">ProxySQL</a> <a href="/tags/bind/" style="font-size: 10px;">bind</a> <a href="/tags/keepalived/" style="font-size: 13.33px;">keepalived</a> <a href="/tags/linux/" style="font-size: 16.67px;">linux</a> <a href="/tags/lvs/" style="font-size: 10px;">lvs</a> <a href="/tags/modules/" style="font-size: 10px;">modules</a> <a href="/tags/nfs/" style="font-size: 10px;">nfs</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/web/" style="font-size: 13.33px;">web</a> <a href="/tags/中间件/" style="font-size: 10px;">中间件</a> <a href="/tags/主从复制/" style="font-size: 10px;">主从复制</a> <a href="/tags/分布式文件系统/" style="font-size: 10px;">分布式文件系统</a> <a href="/tags/基础命令/" style="font-size: 10px;">基础命令</a> <a href="/tags/文件共享/" style="font-size: 10px;">文件共享</a> <a href="/tags/负载均衡/" style="font-size: 13.33px;">负载均衡</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/06/12/Fastdfs安装配置/">Fastdfs安装配置</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/Maradb主从复制/">Maradb主从复制</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/Mariadb半同步复制及复制过滤器/">Mariadb半同步复制及复制过滤器</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/Maradb主主复制/">Maradb主主复制</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/MogileFS的安装配置/">MogileFS的安装配置</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Pursuit<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
 </body>
 </html>

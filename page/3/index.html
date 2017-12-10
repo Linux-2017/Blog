@@ -1,28 +1,1840 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8">
+  
   <title>Pursuit Blog&#39;s</title>
-  <link rel="icon" href="favicon.ico"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="/css/ionicons.min.css">
-  <link rel="stylesheet" href="/css/milligram.min.css">
-  <link rel="stylesheet" href="/css/comfortaa.css">
-  <link rel="stylesheet" href="/css/source-sans-pro.css">
-  <link rel="stylesheet" href="/css/animate.min.css">
-  <link rel="stylesheet" href="/css/nprogress.css">
-  <link rel="stylesheet" href="/css/loaders.min.css">
-  <link rel="stylesheet" href="/css/atom-one-light.css">
-  <link rel="stylesheet" href="/css/app.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Pursuit Blog&#39;s">
+<meta property="og:url" content="https://shensir.info/page/3/index.html">
+<meta property="og:site_name" content="Pursuit Blog&#39;s">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pursuit Blog&#39;s">
+  
+    <link rel="alternate" href="/atom.xml" title="Pursuit Blog&#39;s" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
 </head>
+
 <body>
-  <div id="app"></div>
-  <script type="text/javascript">
-    window.root = "/"
-  </script>
-  <script src="/js/manifest.js"></script>
-  <script src="/js/vendor.js"></script>
-  <script src="/js/app.js"></script>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Pursuit Blog&#39;s</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://shensir.info"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-blog" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/18/blog/" class="article-date">
+  <time datetime="2017-04-18T06:14:08.000Z" itemprop="datePublished">2017-04-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/18/blog/">文件查找与解压缩</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="文件查找与解压缩"><a href="#文件查找与解压缩" class="headerlink" title="文件查找与解压缩"></a>文件查找与解压缩</h1><h2 id="Locate"><a href="#Locate" class="headerlink" title="Locate"></a>Locate</h2><p>查询系统上预建的文件索引数据库<br>/var/lib/mlocate/mlocate.db<br>依赖于事先构建的索引<br>索引的构建是在系统较为空闲时自动进行(周期性任务),管理员手动更新数据库(updatedb)<br>索引构建过程需要遍历整个根文件系统,极消耗资源</p>
+<pre><code>locate KEYWORD
+    -i 不区分大小写的搜索
+    -n N 之列举N个匹配项目
+    -r 使用Regex来搜索
+</code></pre><h2 id="Find"><a href="#Find" class="headerlink" title="Find"></a>Find</h2><p>find [OPTION]… [查找路径] [查找条件] [处理动作]<br>查找路径:指定具体目标路径;默认为当前目录<br>查找条件:指定的查找标准,可以文件名、大小、类型、权限等标准进行;默认为找出指定路径下的所有文件<br>处理动作:对符合条件的文件做操作,默认输出至屏幕<br>指搜索层级</p>
+<pre><code>-maxdepth level 最大搜索目录深度,指定目录为第1级
+-mindepth level 最大搜索目录深度
+</code></pre><p>根据文件名和inode查找:</p>
+<pre><code>-name &quot;文件名称&quot;:支持使用glob *, ?, [], [^]
+-iname &quot;文件名称&quot;:不区分字母大小写
+-inum n 按inode号查找
+-samefile name 相同inode号的文件
+-links n 链接数为n的文件
+-regex &quot;PATTERN&quot;:以PATTERN匹配整个文件路径字符串,而不仅仅是文件名称
+</code></pre><p>根据属主、属组查找:</p>
+<pre><code>-user USERNAME:查找属主为指定用户(UID)的文件
+-group GRPNAME: 查找属组为指定组(GID)的文件
+-uid UserID:查找属主为指定的UID号的文件
+-gid GroupID:查找属组为指定的GID号的文件
+-nouser:查找没有属主的文件
+-nogroup:查找没有属组的文件
+</code></pre><p>根据文件类型查找:</p>
+<pre><code>-type TYPE:
+• f: 普通文件
+• d: 目录文件
+• l: 符号链接文件
+• s:套接字文件
+• b: 块设备文件
+• c: 字符设备文件
+• p: 管道文件
+</code></pre><p> 组合条件:</p>
+<pre><code>与:-a
+或:-o
+非:-not, !
+</code></pre><p>德· 摩根定律:<br>(非 A) 或 (非 B) = 非(A 且 B)<br>(非 A) 且 (非 B) = 非(A 或 B)<br> 示例:<br>!A -a !B = !(A -o B)<br>!A -o !B = !(A -a B)</p>
+<p>根据权限查找:</p>
+<pre><code>-perm [/|-]MODE
+MODE: 精确权限匹配
+/MODE:任何一类(u,g,o)对象的权限中只要能一位匹配即可,或关系,+ 从centos7开始淘汰
+-MODE:每一类对象都必须同时拥有指定权限,与关系0 表示不关注
+• find -perm 755 会匹配权限模式恰好是755的文件
+• 只要当任意人有写权限时,find -perm +222就会匹配
+• 只有当每个人都有写权限时,find -perm -222才会匹配
+• 只有当其它人(other)有写权限时,find -perm -002才会匹配
+</code></pre><p>处理动作</p>
+<pre><code> -print:默认的处理动作,显示至屏幕
+ -ls:类似于对查找到的文件执行“ls -l”命令
+ -delete:删除查找到的文件
+ -fls file:查找到的所有文件的长格式信息保存至指定文件中
+ -ok COMMAND {} \; 对查找到的每个文件执行由 COMMAND指定的命令,对于每个文件执行命令之前,
+ -exec COMMAND {} \; 对查找到的每个文件执行由COMMAND指定的命令
+ {}: 用于引用查找到的文件名称自身
+ find传递查找到的文件至后面指定的命令时,查找到所有符合条件的文件一次性传递给后面的命令都会交互式要求用户确认
+</code></pre><p>参数替换xargs</p>
+<pre><code>由于很多命令不支持管道|来传递参数,而日常工作中有这个必要,所以就有了xargs命令
+xargs用于产生某个命令的参数,xargs 可以读入 stdin 的数据,并且以空格符或回车符将 stdin 的数据分隔成为arguments
+注意:文件名或者是其他意义的名词内含有空格符的情况
+有些命令不能接受过多参数,命令执行可能会失败,xargs可以解决
+</code></pre><p> 示例:</p>
+<pre><code>ls f* |xargs rm
+find /sbin -perm +700 |ls -l 这个命令是错误的
+find /sbin -perm +7000 | xargs ls –l
+find和xargs格式:find | xargs COMMAND
+</code></pre><h2 id="压缩、解压缩及归档工具"><a href="#压缩、解压缩及归档工具" class="headerlink" title="压缩、解压缩及归档工具"></a>压缩、解压缩及归档工具</h2><pre><code> file-roller
+ compress/uncompress: .Z
+ gzip/gunzip: .gz
+ bzip2/bunzip2: .bz2
+ xz/unxz: .xz
+ zip/unzip
+ tar
+ cpio
+</code></pre><h3 id="compress-uncompress"><a href="#compress-uncompress" class="headerlink" title="compress/uncompress"></a>compress/uncompress</h3><p> compress [-dfvcVr] [-b maxbits] [file …]</p>
+<pre><code>-d: 解压缩,相当于uncompress
+-c: 结果输出至标准输出,不删除原文件
+-v: 显示详情
+</code></pre><p> uncompress 解压缩<br> zcat file.Z &gt;file</p>
+<h3 id="gzip-gunzip"><a href="#gzip-gunzip" class="headerlink" title="gzip/gunzip"></a>gzip/gunzip</h3><p>gzip [OPTION]… FILE …</p>
+<pre><code>-d: 解压缩,相当于gunzip
+-c: 将压缩或解压缩的结果输出至标准输出
+-#:1-9,指定压缩比,值越大压缩比越大
+zcat:不显式解压缩的前提下查看文本文件内容
+实例:
+gzip -c messages &gt;messages.gz
+gzip -c -d messages.gz &gt; messages
+zcat messages.gz &gt; messages
+</code></pre><h3 id="bzip2-bunzip2-bzcat"><a href="#bzip2-bunzip2-bzcat" class="headerlink" title="bzip2/bunzip2/bzcat"></a>bzip2/bunzip2/bzcat</h3><p>bzip2 [OPTION]… FILE …</p>
+<pre><code>-k: keep, 保留原文件
+-d:解压缩
+-#:1-9,压缩比,默认为6
+</code></pre><p>bzcat:不显式解压缩的前提下查看文本文件内容</p>
+<h3 id="xz-unxz-xzcat"><a href="#xz-unxz-xzcat" class="headerlink" title="xz/unxz/xzcat"></a>xz/unxz/xzcat</h3><p>xz [OPTION]… FILE …</p>
+<pre><code>-k: keep, 保留原文件
+-d:解压缩
+-#:1-9,压缩比,默认为6
+</code></pre><p>xzcat: 不显式解压缩的前提下查看文本文件内容</p>
+<h2 id="tar工具"><a href="#tar工具" class="headerlink" title="tar工具"></a>tar工具</h2><p>Tar(Tape ARchive,磁带归档的缩写)<br>tar [OPTION]…<br>(1) 创建归档<br>tar -c -f /PATH/TO/SOMEFILE.tar FILE…<br>(2) 追加文件至归档: 注:不支持对压缩文件追加<br>tar -r -f /PATH/TO/SOMEFILE.tar FILE…<br>(3) 查看归档文件中的文件列表<br>tar -t -f /PATH/TO/SOMEFILE.tar<br>(4) 展开归档<br>tar -x -f /PATH/TO/SOMEFILE.tar<br>tar -x -f /PATH/TO/SOMEFILE.tar -C /PATH/<br>(5) 结合压缩工具实现:归档并压缩<br>-j: bzip2, -z: gzip, -J: xz<br>-T选项指定输入文件,-X选项指定包含要排除的文件列表<br>tar zcvf mybackup.tgz -T /root/includefilelist -X<br>/root/excludefilelist<br>分割大的 tar 文件为多份小文件:<br>split –b Size –d tar-file-name prefix-name<br>split -b 1M –d mybackup.tgz mybackup-parts<br>split -b 1M mybackup.tgz mybackup-parts<br>合并:<br>cat mybackup-parts* &gt; mybackup.tar.gz</p>
+<h2 id="cpio"><a href="#cpio" class="headerlink" title="cpio"></a>cpio</h2><p>cpio命令是通过重定向的方式将文件打包备份，还原恢复的工具，它可以解压已”.cpio”结尾或者”.tar”<br>cpio [选项] &gt; 文件名或者设备名<br>cpio [选项] &lt; 文件名或者设备名<br>选项</p>
+<pre><code>-o 将文件拷贝打包成文件或者将文件输出到设备上
+-i 解包，将打包文件解压或将设备上的备份还原到系统
+-t 预览，查看文件内容或者输出到设备上的文件内容
+-v 显示打包过程中的文件名称
+-d 解包生产目录，在cpio还原时，自动的建立目录
+-c 一种较新的存储方式
+</code></pre><p>示例</p>
+<pre><code>将Etc目录备份
+    fin ./etc -print|cpio -ov &gt;etc.cpio
+内容预览
+    cpio -tv &lt; etc.cpio 
+</code></pre><pre><code class="shell">    ls /etc
+    pwd
+    ls
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shensir.info/2017/04/18/blog/" data-id="cjb05gx4y000k86zu5q7ng08x" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/基础命令/">基础命令</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-bind编译安装" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/18/bind编译安装/" class="article-date">
+  <time datetime="2017-04-18T06:14:08.000Z" itemprop="datePublished">2017-04-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/18/bind编译安装/">编译安装bind</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="bind编译安装"><a href="#bind编译安装" class="headerlink" title="bind编译安装"></a>bind编译安装</h2><p>解压源码包</p>
+<blockquote>
+<p>tar xvf bin9.tar.gz</p>
+</blockquote>
+<p>添加named用户</p>
+<blockquote>
+<p>useradd -r -s /sbin/nologin -d /var/named -u 53 named</p>
+</blockquote>
+<p>创建用户家目录并修改所属组及其权限</p>
+<blockquote>
+<p>mkdir /var/named</p>
+<p>chown root.named /var/named</p>
+<p>chmod 770 /var/named</p>
+</blockquote>
+<p>安装依赖</p>
+<blockquote>
+<p>yum install gcc  openssl-devel -y</p>
+</blockquote>
+<p>编译安装</p>
+<blockquote>
+<p>./configure –prefix=/usr/local/dns  –sysconfdir=/etc/named</p>
+<p>make &amp;&amp; make install</p>
+</blockquote>
+<p>将生成打文件加入path变量</p>
+<blockquote>
+<p>vim /etc/profie.d/bind9.sh</p>
+<p>PATH=$PATH:/usr/local/dns/bin:/usr/local/dns/sbin</p>
+<p>source /etc/profile.d/bind8.sh</p>
+</blockquote>
+<p>添加man帮助</p>
+<blockquote>
+<p>vim /etc/man_db.conf</p>
+<p>MANDATORY_MANPATH                       /usr/local/dns/share/man</p>
+<p>mandb</p>
+</blockquote>
+<p>添加配置文件</p>
+<blockquote>
+<p>vim /etc/named/named.conf</p>
+<p>options {</p>
+<p>​    directory “/var/named”;</p>
+<p>};</p>
+<p>zone “test.com” {</p>
+<p>​    type master;</p>
+<p>​    file “test.com.zone”;</p>
+<p>};</p>
+</blockquote>
+<p>添加zone文件</p>
+<blockquote>
+<p>[root@shen named]# cat test.com.zone<br>$TTL 86400<br>@ IN SOA dns1 root.test.com. ( 1 1D 1h 1w 1h )</p>
+<p>​    NS    dns1</p>
+<p>dns1    A    172.18.50.71<br>www    CNAME    web<br>web    A    172.18.50.71</p>
+</blockquote>
+<p>确保named用户对其可读</p>
+<p>named-checkconf 检查配置文件语法是否正确</p>
+<p>named-checkzone “test.com” /var/named/test.com.zone 检查zone文件</p>
+<p>启动服务</p>
+<blockquote>
+<p>named</p>
+</blockquote>
+<p>测试</p>
+<blockquote>
+<p>[root@shen named]# dig www.test.com @127.0.0.1</p>
+<p>; &lt;&lt;&gt;&gt; DiG 9.11.0-P5 &lt;&lt;&gt;&gt; www.test.com @127.0.0.1<br>;; global options: +cmd<br>;; Got answer:<br>;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 6599<br>;; flags: qr aa rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: 2</p>
+<p>;; OPT PSEUDOSECTION:<br>; EDNS: version: 0, flags:; udp: 4096<br>; COOKIE: 6765dbacd3bfd785ae70758258f5822040069e69289113fa (good)<br>;; QUESTION SECTION:<br>;www.test.com.            IN    A</p>
+<p>;; ANSWER SECTION:<br>www.test.com.        86400    IN    CNAME    web.test.com.<br>web.test.com.        86400    IN    A    172.18.50.71</p>
+<p>;; AUTHORITY SECTION:<br>test.com.        86400    IN    NS    dns1.test.com.</p>
+<p>;; ADDITIONAL SECTION:<br>dns1.test.com.        86400    IN    A    172.18.50.71</p>
+<p>;; Query time: 0 msec<br>;; SERVER: 127.0.0.1#53(127.0.0.1)<br>;; WHEN: Mon Apr 17 23:04:00 EDT 2017<br>;; MSG SIZE  rcvd: 138</p>
+</blockquote>
+<p>切换到前台执行</p>
+<blockquote>
+<p>yum provides killall</p>
+<p>yum install psmisc-22.20-11.el7.x86_64      </p>
+<p>killall named</p>
+<p> named -f -d 3 -g</p>
+</blockquote>
+<p>添加根节点</p>
+<blockquote>
+<p>dig -t NS . &gt; /var/named/namd.ca</p>
+<p>vim /etc/named/named.conf</p>
+<p>zone “.” {</p>
+<p>​    type hint;</p>
+<p>​    file “named.ca”;</p>
+<p>};</p>
+</blockquote>
+<p>rndc错误</p>
+<blockquote>
+<p>[root@shen named]# rndc status<br>rndc: neither /etc/named/rndc.conf nor /etc/named/rndc.key was found</p>
+</blockquote>
+<p>修复</p>
+<blockquote>
+<p>rndc-confgen -r /dev/urandom  &gt; /etc/named/rndc.conf</p>
+<p>tail -n 12 rndc.conf | sed ‘s/# //‘ &gt;&gt; /etc/named/named.conf </p>
+<p>vim /etc/named/named.conf</p>
+<p>删除 Use with 以及End of name 这两行</p>
+<p>重启服务后</p>
+<p>[root@shen named]# rndc status<br>version: BIND 9.11.0-P5 <id:ad4fb79><br>running on shen.org: Linux x86_64 3.10.0-514.el7.x86_64 #1 SMP Tue Nov 22 16:42:41 UTC 2016<br>boot time: Tue, 18 Apr 2017 03:41:03 GMT<br>last configured: Tue, 18 Apr 2017 03:41:03 GMT<br>configuration file: /etc/named/named.conf<br>CPUs found: 1<br>worker threads: 1<br>UDP listeners per interface: 1<br>number of zones: 100 (98 automatic)<br>debug level: 3<br>xfers running: 0<br>xfers deferred: 0<br>soa queries in progress: 0<br>query logging is OFF<br>recursive clients: 0/900/1000<br>tcp clients: 0/150<br>server is up and running</id:ad4fb79></p>
+</blockquote>
+<p>压力测试</p>
+<blockquote>
+<p>cd /root/bind-9.11.0-P5/contrib/queryperf</p>
+<p>./cconfigure</p>
+<p>make</p>
+<p>/root/bind-9.11.0-P5/contrib/queryperf</p>
+<p>vim  ~/test.txt</p>
+<p>www.test.com A</p>
+<p>test.com NS</p>
+<p>:1,$y</p>
+<p>多复制一点</p>
+<p>/root/bind-9.11.0-P5/contrib/queryperf</p>
+</blockquote>
+<p>打开日志功能</p>
+<blockquote>
+<p>rndc querylog</p>
+<p>rndc status</p>
+</blockquote>
+<p>dns排错</p>
+<blockquote>
+<p>NXDOMAIN: the queried name does not exits in the zone.</p>
+<p>可能是CNAME对应打A记录不存在导致</p>
+<p>REFUSED: The nameserver refused the client’s DNS</p>
+<p>可能是DNS策略导致</p>
+<p>避免CNAME指向CNAME记录,可能产生回环<br>test.example.com. IN CNAME lab.example.com.<br>lab.example.com. IN CNAME test.example.com.</p>
+<p>正确配置PTR记录,许多服务依赖PTR,如sshd,MTA</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shensir.info/2017/04/18/bind编译安装/" data-id="cjb05gx4x000i86zujzc15guw" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bind/">bind</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ca" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/11/ca/" class="article-date">
+  <time datetime="2017-04-11T12:40:55.000Z" itemprop="datePublished">2017-04-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/11/ca/">ca</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="创建ca"><a href="#创建ca" class="headerlink" title="创建ca"></a>创建ca</h1><h4 id="server端"><a href="#server端" class="headerlink" title="server端"></a>server端</h4><ul>
+<li>生成私钥</li>
+</ul>
+<pre><code class="shell">(umask 066;openssl genrsa -out /etc/pki/CA/private/cakey.pem 4096)
+</code></pre>
+<ul>
+<li>自颁发证书</li>
+</ul>
+<pre><code class="shell">cd /etc/pki/CA
+openssl req -new -x509 -key private/cakey.pem -out cacert.pem -days 99999
+</code></pre>
+<ul>
+<li>创建后面需要用到的文件<ul>
+<li>touch /etc/pki/CA/index.txt</li>
+<li>echo 01 &gt; /etc/pki/CA/serial</li>
+</ul>
+</li>
+</ul>
+<h4 id="client端"><a href="#client端" class="headerlink" title="client端"></a>client端</h4><ul>
+<li>生成私钥</li>
+</ul>
+<pre><code class="shell">(umask 077;openssl genrsa -out /etc/pki/tls/private/test.key 1024)
+</code></pre>
+<ul>
+<li>生成申请文件</li>
+</ul>
+<pre><code class="shell">cd /etc/pki/tls/private
+openssl req -new -key test.key -out /etc/pki/tls/test.csr -days 365
+</code></pre>
+<h4 id="颁发证书"><a href="#颁发证书" class="headerlink" title="颁发证书"></a>颁发证书</h4><ul>
+<li>将client端申请文件scp至ca端</li>
+</ul>
+<pre><code>scp /etc/pki/tls/test.csr root@ca_ip:~
+</code></pre><ul>
+<li>颁发</li>
+</ul>
+<pre><code class="shell">opensl ca -in test.csr -out /etc/pki/CA/certs/test.crt -days 365
+</code></pre>
+<ul>
+<li>然后将test.crt –&gt;client</li>
+</ul>
+<p><strong>注意</strong> ： 默认国家、省、公司名称三项必须和CA一致</p>
+<h4 id="吊销证书"><a href="#吊销证书" class="headerlink" title="吊销证书"></a>吊销证书</h4><ul>
+<li><p>echo 01 &gt; /etc/pki/CA/crlumber  首次生成吊销列表需要创建此文件</p>
+<ul>
+<li>openssl ca -revoke newcerts/01.pem</li>
+<li>openssl ca -gencrl -out crl /cr2.pem</li>
+</ul>
+</li>
+<li><p>查看是否吊销</p>
+<ul>
+<li><p>openssl crl -in crl/cr1.pem -noout -text</p>
+</li>
+<li><p>复制crl/cr1.pem到windows,改后缀为crl查看是否成功</p>
+<p>​</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="一些用到的命令"><a href="#一些用到的命令" class="headerlink" title="一些用到的命令"></a>一些用到的命令</h4><ul>
+<li><p>openssl  req -new -x509 -key  cakey.pem -days 9999 -out cacert.pem</p>
+<ul>
+<li>-new 生成新证书签署请求</li>
+<li>-x509 专用于CA生成自签证书</li>
+<li>-key 生成请求时用到的私钥文件</li>
+<li>-days n 证书的有效期限，单位为天</li>
+<li>-out /path/filename 证书的保存路径</li>
+</ul>
+</li>
+<li><p>查看证书的信息</p>
+<pre><code>openssl x509 -in /path/证书 -noout -text|issuer|subject|serial|dates
+</code></pre></li>
+<li><p>查看指定编号的证书状态</p>
+<pre><code>openssl ca -status SERIAL
+</code></pre></li>
+</ul>
+<p>一个搭建ca环境的脚本</p>
+<p>ca_server.sh</p>
+<pre><code class="shell">#!/bin/bash
+read -p &quot;Please enter the certificate is valid(The unit is day):&quot; c_time
+read -p &quot;Country Name (2 letter code) [XX]:&quot; c_name
+read -p &quot;State or Province Name (full name) []:&quot; p_name
+read -p &quot;Organization Name (eg, company) [eg test.com]:&quot; o_name
+
+ca_key=&quot;/etc/pki/CA/private/cakey.pem&quot;
+ca_pub=&quot;/etc/pki/CA/cacert.pem&quot;
+
+if [ -f  $ca_key ];then
+    echo $ca_key is esxit.
+    exit 1
+else
+    (umask 066;openssl genrsa -out $ca_key  4096) &amp;&gt;/dev/null
+
+    echo -e &quot;$c_name\n$p_name\n\n$o_name\n\nca.$o_name\n\n&quot;|openssl req -new -x509 -key $ca_key -out $ca_pub -days $c_time &amp;&gt; /dev/null
+fi
+
+touch /etc/pki/CA/index.txt
+echo 01 &gt; /etc/pki/CA/serial
+
+echo $ca_key $ca_pub is ok,day is $c_time
+</code></pre>
+<p>ca_client.sh</p>
+<pre><code class="shell">#!/bin/bash
+
+read -p &quot;Please enter the certificate is valid(The unit is day):&quot; c_time
+
+key_client=&quot;/etc/pki/tls/private/test.key&quot;
+
+(umask 077;openssl genrsa -out $key_client 1024) &amp;&gt; /dev/null
+
+openssl req -new -key $key_client  -out  /etc/pki/tls/test.csr -days $c_time &amp;&gt; /dev/null
+</code></pre>
+<p>手工</p>
+<blockquote>
+<p>scp root@ip_client:/etc/pki/tls/test.csr 至ca_server</p>
+<p>openssl ca -in test.csr  -out /etc/pki/CA/certs/test.crt -days 365</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shensir.info/2017/04/11/ca/" data-id="cjb05gx4z000n86zub6uxm6i4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ca/">Ca</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-systemd" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/08/systemd/" class="article-date">
+  <time datetime="2017-04-08T14:22:22.000Z" itemprop="datePublished">2017-04-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/08/systemd/">systemd</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Systemd"><a href="#Systemd" class="headerlink" title="Systemd"></a>Systemd</h1><ul>
+<li>POST–&gt;Boot Sequence–&gt;Bootloader–&gt;Kernel initramfs(initrd)–&gt;rootfs–&gt;/sbin/init<ul>
+<li>init <ul>
+<li>Centos 5 : Sysv init </li>
+<li>Centos 6 : Upstart</li>
+<li>Centos 7 : Systemd</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Systemd: 系统启动和服务器守护进程管理器，负责在系统启动或运行时，激活系统资源，服务器进程和其他进程．系统引导时实现服务并行启动，按需启动守护进程，自动化的服务依赖关系管理，同时采用socket式与Ｄ-Bus总线式激活服务，系统状态快照．</li>
+</ul>
+<h2 id="unit"><a href="#unit" class="headerlink" title="unit"></a>unit</h2><p><strong>unit</strong>表示不同类型的systemd对象，通过配置文件进行标识和配置；文件中主要包含了系统服务，监听socket,保存系统快照以及其他与init相关的信息</p>
+<p><strong>配置文件</strong>：</p>
+<ul>
+<li>/usr/lib/systemd/system: 每个服务最主要的启动脚本设置，类似于之前的/etc/init.d/</li>
+<li>/run/systemd/system: 系统执行过程中所产生的服务脚本，比上面目录优先运行</li>
+<li>/etc/systemd/system: 管理员建立的执行脚本，类似与/etc/rc.d/rcN.d/sxx类的功能，比上面目录优先运行</li>
+</ul>
+<p><strong>unit类型</strong></p>
+<ul>
+<li>Systemctl -t help 查看unit类型</li>
+<li>Service unit: 文件扩展名为.service，用于定义系统服务</li>
+<li>Target uniq: .device,用于定义内核识别的设备</li>
+<li>Ｍount unit: .mount,用于定义文件系统挂载点</li>
+<li>Socket unit: .socket,用于标识进程间通信用的socket文件，也可在系统启动时，延迟启动服务，实现按需启动</li>
+<li>Snapshot unit: .snapshot,管理系统快照</li>
+<li>Swap unit: .swao,用于标识swap设备</li>
+<li>Automount unit: .automount,文件系统的自动挂载点</li>
+<li>Path unit: .path,用于定义文件系统中的一个文件或目录使用，常用于当文件系统变化时，延迟激活服务，如：spool目录</li>
+</ul>
+<p><strong>管理服务</strong></p>
+<ul>
+<li>systemctl start|stop|reload|restart|status name.service</li>
+<li>条件式重启: 已启动才重启，否则不做操作: systemctl try-restart name.service</li>
+<li>禁止自动和手动启动: Systemctl mask name.service</li>
+<li>取消禁止: Systemctl unmask name.service</li>
+</ul>
+<p><strong>服务查看</strong></p>
+<ul>
+<li><p>查看某服务当前激活与否的状态</p>
+<blockquote>
+<p>systemctl is-active name.service</p>
+</blockquote>
+</li>
+<li><p>查看所有已经激活的服务</p>
+<blockquote>
+<p>systemctl list-unis –type|-t service</p>
+</blockquote>
+</li>
+<li><p>查看所有服务</p>
+<blockquote>
+<p>systemctl list-units –type service -all|-a</p>
+</blockquote>
+</li>
+<li><p>设定某服务的开机启动</p>
+<blockquote>
+<p>chkconfig name on ==&gt; systemctl enable name.service</p>
+</blockquote>
+</li>
+<li><p>设定某服务的开机禁止启动</p>
+<blockquote>
+<p>chkconfig name off ==&gt; systemctl disable name.service</p>
+</blockquote>
+</li>
+<li><p>查看所有的开机自启状态</p>
+<blockquote>
+<p>chkconfig –list ==&gt; systemctl list-unit-files –type service</p>
+</blockquote>
+</li>
+<li><p>用来列出该服务在哪些运行级别下启用和禁用</p>
+<blockquote>
+<p>chkconfig sshd -list ==&gt; ls /etc/systemd/system/*.wants/sshd.service</p>
+</blockquote>
+</li>
+<li><p>查看服务是否开机自启</p>
+<blockquote>
+<p>systemctl is-enabled name.service</p>
+</blockquote>
+</li>
+<li><p>其他命令</p>
+<blockquote>
+<p>查看服务的依赖关系:</p>
+<p>systemctl list-dependencies name.service</p>
+</blockquote>
+</li>
+<li><p>杀掉进程</p>
+<blockquote>
+<p>systemctl kill 进程名</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>服务状态</strong></p>
+<ul>
+<li>systemctl list-unit-files –type service –all显示状态</li>
+<li>loaded: Unit配置文件已处理</li>
+<li>active(running) : 一次或多次持续处理的运行</li>
+<li>active(exited): 成功完成一次性的配置</li>
+<li>active(waiting): 运行中，等待一个事件</li>
+<li>inactive: 不运行</li>
+<li>enabled: 开机启动</li>
+<li>disabled: 开机不启动</li>
+<li>static: 开机不启动，但可被另一个启用的服务激活</li>
+</ul>
+<p><strong>命令示例</strong></p>
+<ul>
+<li><p>显示所有单元状态</p>
+<blockquote>
+<p>systemctl 或 systemctl list-units</p>
+</blockquote>
+</li>
+<li><p>只显示服务单元的状态</p>
+<blockquote>
+<p>systemctl –type=service</p>
+</blockquote>
+</li>
+<li><p>显示sshd服务单元</p>
+<blockquote>
+<p>systemctl status sshd.service -l</p>
+</blockquote>
+</li>
+<li><p>验证sshd服务当前是否活动</p>
+<blockquote>
+<p>systemctl is-active sshd</p>
+</blockquote>
+</li>
+<li><p>列出所有服务状态的所有服务单元</p>
+<blockquote>
+<p>systemctl list-units –type=service </p>
+</blockquote>
+</li>
+<li><p>列出所有服务单元</p>
+<blockquote>
+<p>systemctl list-units –type=service –all</p>
+</blockquote>
+</li>
+<li><p>查看服务单元的启用和禁用状态</p>
+<blockquote>
+<p>systemctl list-unit-files –type=service</p>
+</blockquote>
+</li>
+<li><p>列出失败的服务</p>
+<blockquote>
+<p>systemctl –failed –type=service</p>
+</blockquote>
+</li>
+<li><p>列出依赖的单元</p>
+<blockquote>
+<p>systemctl listdependencies sshd</p>
+</blockquote>
+</li>
+<li><p>禁用network,使之不能自动启动，但手动可以</p>
+<blockquote>
+<p>systemctl disable network</p>
+</blockquote>
+</li>
+<li><p>启用network</p>
+<blockquote>
+<p>systemctl enable network </p>
+</blockquote>
+</li>
+<li><p>禁用network,使之不能手动或自动启动</p>
+<blockquote>
+<p>systemctl mask network</p>
+</blockquote>
+</li>
+<li><p>启用network</p>
+<blockquote>
+<p>systemctl unmask network</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>运行级别</strong></p>
+<ul>
+<li><p>target units:</p>
+<blockquote>
+<p>unit配置文件: .target</p>
+<p>ls /usr/lib/systemd/system/*.target</p>
+<p>systemctl list-unit-files –type target –all</p>
+</blockquote>
+</li>
+<li><p>运行级别</p>
+<blockquote>
+<p>0 ==&gt; runlevel0.target,poweroff.target</p>
+<p>1 ==&gt; runlevel1.target,recue.target</p>
+<p>2 ==&gt; runlevel2.target,multi-user.target</p>
+<p>3 ==&gt; runlevel3.target,multi-user.target</p>
+<p>4 ==&gt; runlevel4.target,multi-user.target</p>
+<p>5 ==&gt; runlevel5.target,graphical.target</p>
+<p>6 ==&gt; runlevel6.target,reboot.target</p>
+</blockquote>
+</li>
+<li><p>查看依赖性:</p>
+<blockquote>
+<p>systemctl list-dependencies graphical.target</p>
+</blockquote>
+</li>
+<li><p>级别切换: init N  ==&gt; systemctl isolate name.target</p>
+<p>systemctl isolate multi-user.target</p>
+<p>注: 只有/lib/systemd/system/*.target文件中AllowIoslate=yes才能切换(修改文件需执行systemctl daemon-reload才能生效)</p>
+</li>
+<li><p>查看target;</p>
+<p>runlevel ; who -r</p>
+<p>systemctl list-units –type target</p>
+</li>
+<li><p>获取默认运行级别</p>
+<p>/etc/initab ==&gt; systemctl get-default</p>
+</li>
+<li><p>修改默认级别</p>
+<p>/etc/initab ==&gt; systemctl set-default name.target</p>
+<p>systemctl set-default multi-user.target</p>
+<p>ls -l  /etc/systemd/system/default.target</p>
+</li>
+</ul>
+<p><strong>other command</strong></p>
+<ul>
+<li><p>切换至紧急救援摸索</p>
+<blockquote>
+<p>systemctl rescue</p>
+</blockquote>
+</li>
+<li><p>切换至emergency模式</p>
+<blockquote>
+<p>systemctl energebcy</p>
+</blockquote>
+</li>
+<li><p>其他常用命令</p>
+<p>传统命令init,poweroff,halt,reboot都成为systemctl的软链接</p>
+<blockquote>
+<p>关机重启: systemctl halt|poweroff|reboot</p>
+<p>挂起: systemctl suspend</p>
+<p>休眠: systemctl hibernate</p>
+<p>休眠并挂起: systemctl hybrid-sleep</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>Centos 7引导顺序</strong></p>
+<ul>
+<li>UEFI或BIOS初始化，运行POST开机自检</li>
+<li>选择启动设备</li>
+<li>引导装载程序，centos7是grub2</li>
+<li>加载装载程序的配置文件:/etc/grub.d/ /etc/default/grub/ /boot/grub2/grub.cfg</li>
+<li>加载initramfs驱动模块</li>
+<li>加载内核选项</li>
+<li>内核初始化,centos 7使用systemd代替init</li>
+<li>执行initrd.target所有单元,包括挂载/etc/fstab</li>
+<li>从initramfs根文件系统切换到磁盘跟目录</li>
+<li>systemd执行默认target配置,配置文件　/etc/systemd/system/default.target</li>
+<li>systemd执行sysinit.target初始化系统及basic.target准备操作系统</li>
+<li>systemd启动multi-user.target下的本机与服务器服务</li>
+<li>systemd执行multi-user.target下的/etc/rc.d/rd.local</li>
+<li>systemd执行mult-user.target下的getty.target及登陆服务</li>
+<li>systemd换行graphical需要的服务</li>
+</ul>
+<p><strong>centos 7口令破解</strong></p>
+<ul>
+<li>启动时e进入编辑模式</li>
+<li>在linux16后添加内核参数rd.break，然后ctrl +x</li>
+<li>mount -o remount,rw /sysroot</li>
+<li>chroot /sysroot</li>
+<li>passwd root</li>
+<li>touch /.autorelabel</li>
+<li>exit</li>
+</ul>
+<p><strong>修复grub2</strong></p>
+<ul>
+<li><p>修复主配置文件</p>
+<blockquote>
+<p>grub2-mkconfig &gt; /boot/grub2/grub.cfg</p>
+</blockquote>
+</li>
+<li><p>修复grub</p>
+<blockquote>
+<p>grub2-install /dev/sda bios</p>
+<p>grub2-install UEFI</p>
+</blockquote>
+</li>
+<li><p>调整默认启动内核</p>
+<blockquote>
+<p>vim /etc/default/grub</p>
+<p>GRUB_DEFAULT=0</p>
+</blockquote>
+<p>​</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shensir.info/2017/04/08/systemd/" data-id="cjb05gx5l001x86zu2t3dl2i7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-awk" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/08/awk/" class="article-date">
+  <time datetime="2017-04-08T14:20:19.000Z" itemprop="datePublished">2017-04-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/08/awk/">awk</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h1><p><strong>基本用法</strong></p>
+<ul>
+<li>awk [option] ‘program’ var=value file…</li>
+<li>awk [option] -f programfile var=value file…</li>
+<li>awk [option] ‘BEGIN{action;…}pattern{action;…}END{action;…}’ file</li>
+</ul>
+<p><strong>awk变量</strong></p>
+<ul>
+<li>FS: 输入字段分隔符</li>
+<li>OFS: 输出字段分隔符，默认为空白字符</li>
+<li>RS: 输入记录分隔符,指定输入时的换行符,原换行符仍有效</li>
+<li>ORS: 输出记录分隔符，输出时用指定符合代替换行符</li>
+<li>NF: 字段数量</li>
+<li>NR: 行号</li>
+<li>FNR: 各文件分别计数，行号</li>
+<li>FILENAME: 当前文件名</li>
+<li>ARGC: 命令行参数的个数</li>
+<li>ARGV: 数组，保存的三命令行所给定的各参数</li>
+</ul>
+<p><strong>printf命令</strong></p>
+<ul>
+<li><p>格式化输出: printf ‘FORMAT’ , item1, item2,…</p>
+<ul>
+<li>必须指定format</li>
+<li>不会自动换行，需要显示给出换行控制符，\n</li>
+<li>FORMAT中需要分别为后面的每个item指定格式符</li>
+</ul>
+</li>
+<li><p>格式符：与item一一对应</p>
+<ul>
+<li>%c: 显示字符的ascii码</li>
+<li>%d,%i: 显示十进制整数</li>
+<li>%e,%E: 显示科学计数法数值</li>
+<li>%f: 显示为浮点数</li>
+<li>%g,%G: 以科学计数发或浮点数显示数值</li>
+<li>%s: 显示字符串</li>
+<li>%u: 无符号整数</li>
+<li>%%: 显示%自身</li>
+</ul>
+</li>
+<li><p>修饰符</p>
+<ul>
+<li>#[.#]: 第一个数字控制显示的宽度；第二个#表示小数点后精度，%3.1f</li>
+<li>-: 左对齐(默认右对齐)　%-15s</li>
+<li>+: 显示数值的正负符号　%+d</li>
+</ul>
+</li>
+<li><p>操作符</p>
+<ul>
+<li><p>&amp;&amp; || 非!</p>
+</li>
+<li><p>函数调用: function_name(argu1, argu2,…)</p>
+</li>
+<li><p>条件表达式(三目表达式)</p>
+<blockquote>
+<p>selector?if-true-expressioon:if-false-expression</p>
+</blockquote>
+<pre><code class="shell">awk -F: &#39;{3&gt;=500?usertype=&quot;comman user&quot;:usertype=&quot;sysadmin or root&quot;;printf &quot;%-15s:%-s\n&quot;,1,usertype}&#39; /etc/passwd
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>awk PATTERN</strong></p>
+<ul>
+<li><p>如果为指定：空模式，匹配每一行</p>
+</li>
+<li><p>/regular expression/: 仅处理能够模式匹配到的行，需要用//括起来</p>
+</li>
+<li><p>relational expression: 关系表达式，结果为真，才会被处理</p>
+<ul>
+<li>真：结果为非０，非空字符串</li>
+<li>假：结果为空字符串或０值</li>
+</ul>
+</li>
+<li><p>line ranges: 行范围</p>
+<p>startline,endline: /pat1/,/pat2/ 不支持直接给出数值格式</p>
+<pre><code class="shell">awk -F: &#39;/^root\&gt;/,/^nobody\&gt;/{print $1}&#39; /etc/passwd
+awk -F: &#39;(NR&gt;=10&amp;&amp;NR&lt;=20){print NR,$1}&#39;
+</code></pre>
+</li>
+<li><p>BEGIN/END模式</p>
+<p>BEGIN{}:仅在开始处理文件中的文本之前执行一次</p>
+<p>END{}: 仅在文本处理完成之后执行一次</p>
+</li>
+</ul>
+<p><strong>控制语句</strong></p>
+<ul>
+<li><p>if-else</p>
+<blockquote>
+<p>语法：if(condition){statement;…}[else statement]</p>
+<p>​        if(condition1){statement1}else if(condition2){statement2}else{statement3}</p>
+<p>使用场景:对awk取得的正行或某个字段做条件判断</p>
+</blockquote>
+<pre><code class="SHELL">awk &#39;BEGIN{ test=100;if(test&gt;90){print &quot;very good&quot;}else if(test&gt;60){print &quot;good&quot;}else{print &quot;no pass&quot;}}&#39;  
+df -Ph| awk -F% &#39;/^\/dev/{print $1}&#39;|awk &#39;$NF&gt;=80{print $1,$5}&#39;
+</code></pre>
+</li>
+<li><p>while循环</p>
+<blockquote>
+<p>语法: while(condition){statement;…}</p>
+<p>使用场景: 对一行内的多个字符逐一类似处理时使用，对数组中的各元素逐一处理时使用</p>
+</blockquote>
+<pre><code>awk &#39;/^[[:space:]]*linux16/{i=1;while(i&lt;=NF){if(length($i)&gt;=10){print $i,length($i)};i++}}&#39; /etc/grub2.cfg
+</code></pre></li>
+<li><p>do-while循环</p>
+<blockquote>
+<p>语法：do {statement;…}while(condition)</p>
+<p>意义:无论真假，至少循环一次</p>
+</blockquote>
+<pre><code>awk &#39;BEGIN{totle=0;i=0;do{total+=i;i++}while(i&lt;=100);print total}&#39;
+</code></pre></li>
+<li><p>for循环}}</p>
+<blockquote>
+<p>语法: for(expr1;expr2;expr3) {statement;…}</p>
+<p>常见用法:</p>
+<p>​    for( variable assignment;condition;iteration process)</p>
+<p>特殊用法: 遍历数组中的元素</p>
+<p>​    语法: for(var in array) {for-body}</p>
+</blockquote>
+<pre><code class="shell">awk &#39;/^[[:space:]]*linux16/{for(i=1;i&lt;=NF;i++){print $i,length($i)}}&#39; /etc/grub2.cfg
+</code></pre>
+</li>
+<li><p>switch语句</p>
+<blockquote>
+<p>语法: switch(expression){case VALUE1 or /REGEXP/:statement1;case VALUE2 or /REGEXP2/:statement…;default:statementn}</p>
+</blockquote>
+</li>
+<li><p>break和continue</p>
+<blockquote>
+<p>awk ‘BEGIN{sum=0;for(i=0;i&lt;=100;i++){if(i%2==0)continue;sum+=i}print sum}’</p>
+<p>awk ‘BEGIN{sum=0;for(i=1;i&lt;=100;i++){if(i==66)break;sum+=i}print sum}’</p>
+</blockquote>
+</li>
+<li><p>next</p>
+<blockquote>
+<p>提前结束对本行处理而直接进入下一行处理(awk自身循环)</p>
+</blockquote>
+<pre><code class="shell">awk -F: &#39;{if($3%2!=0) next; print $1,$3}&#39; /etc/passwd
+</code></pre>
+</li>
+</ul>
+<p><strong>AWK数组</strong></p>
+<ul>
+<li><p>index-expression</p>
+<ul>
+<li><p>可以使用任意字符串；字符串要使用双引号括起来</p>
+</li>
+<li><p>如果某数组元素事先不存在，在引用时，awk会自动创建此元素，并将其值初始化为空串</p>
+</li>
+<li><p>若要判断数组中是否存在某元素，要使用”index in array”格式进行遍历</p>
+<blockquote>
+<p>示例: weedays[“mon”]=”Monday”</p>
+<p>awk ‘BEGIN{weekdays[“mon”]=”Monday”;weekdays[“tue”]=”Tuesday”;print weekdays[“mon”]}’</p>
+<p>用for循环遍历array的每个索引</p>
+<p>awk ‘BEGIN{weekdays[“mon”]=”Monday”;weekdays[“tue”]=”Tuesday”;for(i in weekdays){print weekdays[i]}}’</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>AWK函数</strong></p>
+<ul>
+<li><p>数值处理</p>
+<ul>
+<li><p>rand(): 返回0和1之间一个随机数</p>
+<blockquote>
+<p>awk ‘BEGIN{srand();for(i=1;i&lt;=10;i++)print int(rand()*100)}’</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>字符串处理</p>
+<ul>
+<li><p>length([s]): 返回指定字符串的长度</p>
+</li>
+<li><p>sub(r,s[t]): 对t字符串进行搜索r表示模式匹配的内容，并将第一个匹配的内容替换为s</p>
+<blockquote>
+<p>[root@vmbox6 ~]# echo “2008:08:08 08:08:08” | awk ‘sub(/:/,”-“,$1)’<br>2008-08:08 08:08:08</p>
+</blockquote>
+</li>
+<li><p>gsub(r,s[t]): 对t字符串进行搜索r表示模式匹配的内容，并全部替换为s所表示的内容</p>
+<blockquote>
+<p>[root@vmbox6 ~]# echo “2008:08:08 08:08:08” | awk ‘gsub(/:/,”-“,$1)’<br>2008-08-08 08:08:08</p>
+</blockquote>
+</li>
+<li><p>split(s,array,[r]): 以r为分隔符，切割字符串，并将切割后的结果保存之array所表示的数组中，第一个索引为1,第二个索引为2,…</p>
+<blockquote>
+<p>[root@vmbox6 ~]# netstat -tan | awk ‘/^tcp>/{split($5,ip,”:”);count[ip[1]]++}END{for (i in count) {print i,count[i]}}’<br> 5<br>192.168.56.1 2<br>104.116.243.8 1<br>0.0.0.0 5</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>自定义函数</p>
+<ul>
+<li><p>格式: </p>
+<blockquote>
+<p>function name ( parameter,parameter, …){</p>
+<p>​            statements</p>
+<p>​            return expression</p>
+<p>}</p>
+</blockquote>
+</li>
+<li><p>示例:</p>
+<blockquote>
+<p>cat fun.awk</p>
+<p>function max(v1,v2){</p>
+<p>​    v1&gt;v2?var=v1:var=v2</p>
+<p>​    return var</p>
+<p>}</p>
+<p>BEGIN{a=3;b=2;print max(a,b)}</p>
+<p>awk -f fun.awk</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>AWK中调用shell命令</strong></p>
+<ul>
+<li><p>system命令</p>
+<blockquote>
+<p>空格是awk中的字符串连接符，如果system中需要使用awk中的变量可以使用空格分割，或者说除了awk的变量外其他一律用””引用起来</p>
+<p>awk BEGIN’{system(“hostname”)}’</p>
+<p>awk BEGIN’{score=100;system(“echo your score is “ score)}’</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>AWK脚本</strong></p>
+<ul>
+<li><blockquote>
+<p>cat a.awk</p>
+<p>#!/bin/awk -f</p>
+<p>{if($3&gt;=1000)print \$1,\$3}</p>
+</blockquote>
+<p>chmod +x a.awk</p>
+<p>a.awk -F:  /etc/passwd</p>
+</li>
+</ul>
+<p><strong>向AWK脚本传递参数</strong></p>
+<ul>
+<li><p>格式:</p>
+<blockquote>
+<p>awkfile var=value var2=value2 …   Inputfile</p>
+</blockquote>
+<p><strong>注意</strong> ： 在BEGIN过程中不可用。知道首行输入完成以后，变量才可用。可以通过-v参数，让awk在执行BEGIN之前得到变量的值。命令行中每一个指定的变量都需要一个-v参数</p>
+<pre><code>[root@vmbox6 ~]# cat test.awk 
+#!/bin/awk -f
+{if($3 &gt;= min &amp;&amp; $3 &lt;= max)print $1,$3}
+
+[root@vmbox6 ~]# ./test.awk -F: -v  min=100 -v  max=200 /etc/passwd
+usbmuxd 113
+avahi-autoipd 170
+abrt 173
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shensir.info/2017/04/08/awk/" data-id="cjb05gx4w000f86zu2ada8o17" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-selinux" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/05/selinux/" class="article-date">
+  <time datetime="2017-04-05T12:27:29.000Z" itemprop="datePublished">2017-04-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/05/selinux/">selinux</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="SELINUX"><a href="#SELINUX" class="headerlink" title="SELINUX"></a>SELINUX</h2><h4 id="Selinux简介"><a href="#Selinux简介" class="headerlink" title="Selinux简介"></a>Selinux简介</h4><p>SELinux: Secure Enhanced Linux, 是美国国家安全局(NSA=The National Security Agency)和SCC(SecureComputing Corporation)开发的 Linux的一个强制访问控制的<br>安全模块。2000年以GNU GPL发布,Linux内核2.6版本后集成在内核中．</p>
+<h4 id="Selinux工作类型"><a href="#Selinux工作类型" class="headerlink" title="Selinux工作类型"></a>Selinux工作类型</h4><ul>
+<li>Strict: centos5,每个进程都受到selinux的控制</li>
+<li>Targeted: 用来保护常见的网络服务,仅有限进程受到selinux控制,只监控容易被入侵的进程,centos4只保护13个服务,centos5保护88个进程.</li>
+<li>minimum: centos7,修改过的targeted,只对选择的网络服务.</li>
+<li>mls: 提供MLS(多级安全)机制的安全性.</li>
+<li>minimum和mls稳定性不足,未加以应用.</li>
+</ul>
+<h4 id="Selinux安全上下文"><a href="#Selinux安全上下文" class="headerlink" title="Selinux安全上下文"></a>Selinux安全上下文</h4><ul>
+<li>在Selinux中,一切皆对象(object),由存放在inode的扩展属性域的安全元素所控制其访问</li>
+<li>所有文件和端口资源和进程都具备安全标签:安全上下文(security context)</li>
+<li><strong>安全上下文由5个元素组成</strong><ul>
+<li>user:指示登陆系统的用户类型,如root,user_u,system_u多数本地进程都属于自由(unconfined)进程</li>
+<li>role:定义文件,进程和用户的用途:文件:object_r,进程和用户:system_r</li>
+<li>type:指定数据类型,规则中定义何种进程类型访问何种文件,target策略基于type实现,多服务共用:public_content_t．</li>
+<li>sensitivity:限制访问的需要,由组织定义的分层安全级别,如unclassified,secret,top,secret,一个对象有且只有一个sensitivity,分15级,s0最低,Target策略默认使用s0</li>
+<li>category:对于特定组织划分不分层的分类,如FBI Secret,NSA secret,一个对象可以有多个categroy,c0-c1023共1024个分类,target策略不使用category.</li>
+<li>实际上下文:存放在文件系统中,ls -Z;ps -Z</li>
+</ul>
+</li>
+<li>期望(默认)上下文:存放在二进制的SELINUX策略库(映射目录和期望安全上下文)中　　semanage fcontext -l</li>
+</ul>
+<h4 id="Selinux状态"><a href="#Selinux状态" class="headerlink" title="Selinux状态"></a>Selinux状态</h4><ul>
+<li>enforcing:强制，每个受限的进程都必然受限</li>
+<li>permissive:允许,每个受限的进程违规操作不会被禁止,但会被记录与审计日志</li>
+<li>disabled:禁用</li>
+</ul>
+<h4 id="Selinux相关命令"><a href="#Selinux相关命令" class="headerlink" title="Selinux相关命令"></a>Selinux相关命令</h4><ul>
+<li>getenforce:获取selinux当前状态</li>
+<li>sestatus:查看selinux状态</li>
+<li>setenforce 0|1<ul>
+<li>0:设置为permissive</li>
+<li>1:设置为enforcing</li>
+</ul>
+</li>
+<li>给文件重新打安全标签<ul>
+<li>chcon [option] … [-u USER][-r ROLE] [-t TYPE] FILE…</li>
+<li>chcon [option]… –reference=RFILE FILE…</li>
+<li>-R:递归打标</li>
+</ul>
+</li>
+<li>恢复目录或文件默认的安全上下文:<ul>
+<li>restorecon [-R] /path/to/somewhere</li>
+</ul>
+</li>
+<li>semanage:来自policycoreutils-python包</li>
+<li>查看安全上下文<ul>
+<li>semanage fcontext -l</li>
+</ul>
+</li>
+<li>添加<ul>
+<li>semanage fcontext -a -t http_sys_content_t ‘/testdir(/.*)?’</li>
+<li>restorecon -Rv /testdir</li>
+</ul>
+</li>
+<li>删除<ul>
+<li>semanage fcotext -d -t httpd_sys_content_t ‘/testdir(/.*)?’</li>
+</ul>
+</li>
+</ul>
+<h4 id="Selinux布尔值"><a href="#Selinux布尔值" class="headerlink" title="Selinux布尔值"></a>Selinux布尔值</h4><ul>
+<li>布尔型规则<ul>
+<li>getsebool</li>
+<li>setsebool</li>
+</ul>
+</li>
+<li>查看bool命令<ul>
+<li>getsebool [-a] boolean</li>
+<li>semanage boolean -l</li>
+<li>semanage boolean -l -C 查看修改过的布尔值</li>
+</ul>
+</li>
+<li>设置bool值命令<ul>
+<li>setsebool [-p] boolean value (on,off)</li>
+<li>setsebool [-p] boolean=value (0,1)</li>
+</ul>
+</li>
+</ul>
+<h4 id="Selinux日志管理"><a href="#Selinux日志管理" class="headerlink" title="Selinux日志管理"></a>Selinux日志管理</h4><ul>
+<li>yum install setroublesshoot(重启生效) 将错误的信息写入/var/log/message</li>
+<li>grep setroubleshoot  /var/log/message</li>
+<li>sealert -l UUID 查看安全事件日志说明</li>
+<li>sealert -a /var/log/audit/audit.log 扫描并分析日志</li>
+</ul>
+<h4 id="Selinux-help"><a href="#Selinux-help" class="headerlink" title="Selinux help"></a>Selinux help</h4><ul>
+<li>yum install selinux-policy-doc (centos6,7)</li>
+<li>mandb | makewhatis</li>
+<li>man -k _selinux</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shensir.info/2017/04/05/selinux/" data-id="cjb05gx5k001w86zuxkxu9o4c" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-vim" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/03/vim/" class="article-date">
+  <time datetime="2017-04-03T06:14:08.000Z" itemprop="datePublished">2017-04-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/03/vim/">vim</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="vim编辑器"><a href="#vim编辑器" class="headerlink" title="vim编辑器"></a>vim编辑器</h1><p>vim  [option] file</p>
+<p>​    +#:打开文件后，直接让光标处于第＃行</p>
+<p>​    +/pattern:打开文件后，直接让光标处于第一个被pattern匹配到的行的行首</p>
+<p>​    +N file 直接打开file光标在第Ｎ行，默认在最后一行</p>
+<p>​    -b file 二进制方式打开</p>
+<p>​    -d file1 file2 比较多个文件</p>
+<p>​    -m file 只读打开文件</p>
+<p>ex file 或　vim -e 直接进入ex模式    </p>
+<h2 id="Vim-命令模式光标跳转"><a href="#Vim-命令模式光标跳转" class="headerlink" title="Vim 命令模式光标跳转"></a>Vim 命令模式光标跳转</h2><p><strong>行首行尾跳转</strong></p>
+<ul>
+<li>^:调整至行首的第一个非空白字符</li>
+<li>0:跳转至行首</li>
+<li>$:跳转至行尾</li>
+</ul>
+<p><strong>行间移动</strong></p>
+<ul>
+<li>#:G扩展模式</li>
+<li>#:跳转至由#指定行</li>
+<li>Ｇ:最后一行</li>
+<li>1G,gg:第一行</li>
+</ul>
+<p><strong>句间移动</strong></p>
+<ul>
+<li>):下一句</li>
+<li>(:上一句</li>
+</ul>
+<p><strong>段落间移动</strong></p>
+<ul>
+<li>}:下一段</li>
+<li>{:上一段</li>
+</ul>
+<p><strong>命令模式翻屏操作</strong></p>
+<ul>
+<li>Ctrl + f :向文件尾部翻一屏</li>
+<li>Ctrl + b :向文件首部翻一屏</li>
+<li>Ctrl + d :向文件尾部翻半屏</li>
+<li>Ctrl + u: 向文件首部翻半屏</li>
+</ul>
+<p><strong>字符编辑</strong></p>
+<ul>
+<li>x:删除光标处的字符</li>
+<li>#:删除光标处起始的#个字符</li>
+<li>xp:交换光标所在处的字符及其后面字符的位置</li>
+<li>~:转换大小写</li>
+</ul>
+<p><strong>删除命令</strong></p>
+<ul>
+<li>d:删除命令，可结合光标跳转字符，实现范围删除</li>
+<li>d$:删除到行尾</li>
+<li>d^:删除到非空行首</li>
+<li>d0:删除到行首</li>
+<li>dw:</li>
+<li>de:</li>
+<li>db:</li>
+</ul>
+<p><strong>复制命令</strong></p>
+<ul>
+<li>y:复制</li>
+<li>y$</li>
+<li>y0</li>
+<li>y^</li>
+<li>ye</li>
+<li>yw</li>
+<li>yb</li>
+<li>yy:复制行</li>
+<li>#yy复制多行</li>
+</ul>
+<p><strong>粘贴命令</strong></p>
+<ul>
+<li>p:缓冲区存的如果为整行，则粘贴当前光标所在行的下方；否则，则粘贴至当前光标所在行的后面</li>
+<li>P:缓冲区存的如果为整行，则粘贴当前光标所在行的上方；否则，则粘贴至当前光标所在处的前面</li>
+</ul>
+<p><strong>撤销更改</strong></p>
+<ul>
+<li><p>u撤销最近的更改</p>
+</li>
+<li><p>#u撤销之前的多次更改</p>
+</li>
+<li><p>Ｕ撤销光标落在这行后所有此行的更改</p>
+</li>
+<li><p>按Ctrl -r 重做最后的撤销更改</p>
+</li>
+<li><p>.重复之前的操作</p>
+</li>
+<li><p>n.重复前一个操作n次</p>
+<p>​</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shensir.info/2017/04/03/vim/" data-id="cjb05gx5o001z86zuafg3zmgk" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-page" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/03/page/" class="article-date">
+  <time datetime="2017-04-03T06:06:11.000Z" itemprop="datePublished">2017-04-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/03/page/">笔记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h2><p>ls  -a 　all<br>    -l  额外的信息<br>    -R 递归<br>    -ld 目录和符合链接信息<br>    -1 文件分行显示<br>    -S 按文件大小排序<br>    -t mtime排序<br>    -u 配合-t选项，显示并按atime从新到旧排序<br>    -U 按目录存放顺序显示<br>    -X 按文件后缀排序</p>
+<h2 id="stat"><a href="#stat" class="headerlink" title="stat"></a>stat</h2><p>access time 读取文件内容<br>modify time 改变文件内容(数据)<br>change time 元数据发生改变</p>
+<p>##　文件通配符<br>[:digit]<br>[:lower:]<br>[:upper:]<br>[:alpha:]<br>[:alnum:]<br>[:blank:] 水平空白字符<br>[:space:] 水平或垂直空白字符<br>[:punct:] 标点符号<br>[:print:] 可打印字符<br>[:cntrl:] 控制字符<br>[:graph:] 图形字符<br>[:xigit:] 十六进制字符</p>
+<h2 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h2><p>-i 交互式<br>-r,-R 递归<br>-a 归档，相当与-dR –preserv=all<br>-d: –no-dereference –preserv=link 不复制原文件，只复制链接名<br>–preserv=[=ATTR_LIST]</p>
+<pre><code>mode:权限
+ownership:属主属组
+timestamp:
+links
+xattr
+context
+all
+</code></pre><p>-p:等于–preserv=mode,ownership,timestamp<br>-v:–verbose</p>
+<h2 id="硬链接"><a href="#硬链接" class="headerlink" title="硬链接"></a>硬链接</h2><p>创建硬链接会增加额外的记录项以引用文件<br>对应与同一文件系统上一个物理文件<br>每个目录引用相同的inode号<br>创建时链接数递增<br>删除文件时:</p>
+<pre><code>rm命令递减计数的链接
+文件要存在，至少有一个链接数
+当链接数为０，文件则被删除
+</code></pre><p>不能跨越分区或驱动器</p>
+<h2 id="软链接"><a href="#软链接" class="headerlink" title="软链接"></a>软链接</h2><p>１．一个符合链接指向另一个文件<br>２．ls -l 显示链接名和引用的文件<br>３．一个符合链接的内容是它引用文件的名称<br>４．可以对目录进行<br>５．可以跨分区<br>５指向的是另一个文件的路径；其大小为指向的路径字符串的长度；不增加或减少目标文件inode的引用计数；</p>
+<h2 id="file-确定文件内容"><a href="#file-确定文件内容" class="headerlink" title="file 确定文件内容"></a>file 确定文件内容</h2><p>file [option] filename<br>-b 列出文件辨识结果，不显示文件名<br>-f 列车指定文件中内容的文件类型<br>-F 使用指定分割符合替换输出文件名后默认的”:”分割符<br>-L 查看对应软链接对应文件的文件类型</p>
+<p>##　管道与重定向</p>
+<pre><code>&gt; 把STDOUT重定向到文件
+２&gt;　把STDERR重定向到文件
+&amp;&gt; 把所有输出重定向到文件
+&gt;文件内容会被覆盖 
+set -C:全局禁止覆盖
+set +C:允许覆盖
+&gt;&gt; 追加
+2&gt; 覆盖重定向错误输出数据流
+２&gt;&gt; 追加重定向错误输出数据流
+():合并多个程序的STDOUT
+( cal 2007 ; cal 2008 ) &gt; all.txt
+</code></pre><h2 id="tr"><a href="#tr" class="headerlink" title="tr"></a>tr</h2><p>tr [option] set1 set2<br>-c 取字符集的补集<br>-d –delete<br>-s 去重复<br>-t 将第一个字符集对应的字符转换为第二个字符集</p>
+<h2 id="文件权限"><a href="#文件权限" class="headerlink" title="文件权限"></a>文件权限</h2><p>文件<br>r 可使用文件查看类工具获取其内容<br>w 可修改其内容<br>x 可以把此文件提请内核启动为一个进程<br>目录<br>r 可以使用ls查看次目录中文件列表<br>w 可在此目录中创建文件，也可删除此目录中的文件<br>x 可以使用ls -l查看此目录中文件列表，可以cd进去<br>目录 X:只给目录x权限，不给文件x权限</p>
+<h2 id="特殊权限"><a href="#特殊权限" class="headerlink" title="特殊权限"></a>特殊权限</h2><p>###　可执行文件上的SUID权限<br>１.任何一个可执行程序文件能不能启动为进程:取决发起者对程序文件是否拥有执行权限<br>２.启动为进程之后，其进程的属主为原程序文件的属主<br>３.SUID只对二进制可执行程序有效<br>４.SUID设置在目录上无意义<br>权限设定:</p>
+<pre><code class="shell">chmod u+s file
+chmod u-s file
+</code></pre>
+<h3 id="可执行文件上的SGID权限"><a href="#可执行文件上的SGID权限" class="headerlink" title="可执行文件上的SGID权限"></a>可执行文件上的SGID权限</h3><p>１．任何一个可执行程序文件能不能启动为进程；取决发起者对程序文件是否拥有执行权限<br>２．启动为进程之后，其进程的属主为远程序文件的属组<br>３．权限设定</p>
+<pre><code>chmod g+s file
+chmod g-s file
+</code></pre><h3 id="目录上的SGID权限"><a href="#目录上的SGID权限" class="headerlink" title="目录上的SGID权限"></a>目录上的SGID权限</h3><p>１．默认情况下，用户创建文件时，其属组为此用户所属的主组<br>２．一旦某目录被设定了SGID,则对此目录有写权限的用户在此目录中创建的文件所属的组为此目录的属组．<br>３．通常用于创建一个协作目录<br>４．权限设定</p>
+<pre><code class="shell">chmod g+s dir
+chmod g-s dir
+</code></pre>
+<h3 id="Sticky位"><a href="#Sticky位" class="headerlink" title="Sticky位"></a>Sticky位</h3><p>１．具有写权限的目录通常用户可以删除该目录中的任何文件，无论该文件的权限或拥有权<br>２．在目录设置Sticky位，只有文件的所有者或root可以删除该文件<br>３．Sticky设置在文件上无意义</p>
+<pre><code class="shell">chmod o+t dir
+chmod o-t dir
+</code></pre>
+<h3 id="设定文件特点属性"><a href="#设定文件特点属性" class="headerlink" title="设定文件特点属性"></a>设定文件特点属性</h3><p>chattr +i 不能删除，改名，更改<br>chattr +a 只能追加内容<br>lsattr 显示特定属性</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shensir.info/2017/04/03/page/" data-id="cjb05gx5j001t86zutk9p2dh9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-lamp源码包安装" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/02/lamp源码包安装/" class="article-date">
+  <time datetime="2017-04-02T04:00:09.000Z" itemprop="datePublished">2017-04-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/02/lamp源码包安装/">centos7.3构建lamp环境</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="centos7-3构建lamp环境"><a href="#centos7-3构建lamp环境" class="headerlink" title="centos7.3构建lamp环境"></a>centos7.3构建lamp环境</h2><h3 id="apache"><a href="#apache" class="headerlink" title="apache"></a><strong>apache</strong></h3><ul>
+<li><p>安装httpd依赖包</p>
+<ul>
+<li>yum groupinstall “Development Tools” “Server Platform Development” –y</li>
+<li>yum install pcre-devel –y</li>
+<li>apr-devel  apr-util-devel openssl-devel apr-devel apr-util-devel openssl-devel</li>
+</ul>
+</li>
+<li><p>编译安装</p>
+<p> ./configure –prefix=/usr/local/apache24 –enable-so –enable-ssl  –enable-rewrite –with-zlib –with-pcre –with-apr=/usr –with-apr-util=/usr –enable-modules=most –enable-mpms-shared=all –with-mpm=prefork</p>
+<p>make  -j 2&amp;&amp; make install</p>
+</li>
+</ul>
+<p>  /usr/local/apache24/bin/apachectl start</p>
+<h3 id="Maradb"><a href="#Maradb" class="headerlink" title="Maradb"></a><strong>Maradb</strong></h3><ul>
+<li><p>通用二进制方式安装</p>
+<pre><code class="bash">tar xvf mariadb-5.5.46-linux-x86_64.tar.gz -C /usr/local/
+cd /usr/local/
+ln -sv mariadb-5.5.46-linux-x86_64/ mysql
+groupadd -g 27 mysql
+useradd -u 27 -g mysql mysql
+chown -R root.mysql /usr/local/mysql/
+mkdir /mysqldata
+chown -R mysql.mysql /mysqldata
+mkdir /etc/mysql
+mv /etc/my.cnf{,.bak}
+cd /usr/local/mysql/support-file
+cp my-large.cnf /etc/mysql/my.cnf
+vim /etc/mysql/my.cnf  加入
+datadir = /mysqldata
+skip_name_resolve = ON
+innodb_file_per_table = ON
+cp mysql.server  /etc/init.d/mysqld
+chkconfig --add mysqld
+cd /usr/local/mysql
+./scripts/mysql_install_db --user=mysql --datadir=/mysqldata
+[root@aa mysql]# /etc/init.d/mysqld start
+Starting MySQL.. SUCCESS!
+</code></pre>
+</li>
+</ul>
+<h3 id="Php5-6-4"><a href="#Php5-6-4" class="headerlink" title="Php5.6.4"></a><strong>Php5.6.4</strong></h3><ul>
+<li><p>make -j 4 &amp;&amp; make install安装依赖包</p>
+<blockquote>
+<p>yum install libxml2-devel libmcrypt-devel bzip2-devel  curl-devel  libmcypt libmcrypt-devel(epel源)</p>
+</blockquote>
+</li>
+<li><p>编译安装</p>
+<blockquote>
+<p>tar xvf php5.6.4.tar.xz</p>
+<p>./configure –prefix=/usr/local/php –with-mysql=/usr/local/mysql –with-openssl –with-mysqli=/usr/local/mysql/bin/mysql_config –enable-mbstring –with-freetype-dir –with-jpeg-dir –with-png-dir –with-zlib –with-libxml-dir=/usr –enable-xml –enable-sockets –with-apxs2=/usr/local/apache24/bin/apxs –with-mcrypt  –with-config-file-path=/etc –with-config-file-scan-dir=/etc/php.d –with-bz2  –enable-maintainer-zts  –with-curl</p>
+<p>这里为了支持apache的worker或event这两个MPM，编译时使用了–enable-maintainer-zts选项</p>
+<p>make &amp;&amp; make install</p>
+<p>安装完成后在httpd.conf中加入</p>
+<p>AddType application/x-httpd-php .php</p>
+</blockquote>
+<pre><code class="bash">  &lt;IfModule dir_module&gt;
+       DirectoryIndex index.html index.php
+   &lt;/IfModule&gt;
+</code></pre>
+<p>​</p>
+<p>​</p>
+</li>
+</ul>
+<blockquote>
+<p>Centos 7 yum一键lamp脚本</p>
+</blockquote>
+<pre><code class="bash">#!/bin/bash
+#Author:shen
+#date:Saturday, April 22, 2017 AM10:21:54 CST
+#description: centos 7 lamp
+ip=`ifconfig | sed -n &#39;2p&#39;|awk &#39;{print $2}&#39;`
+yum install httpd php php-fpm php-mysql mariadb-server -y
+
+systemctl enable httpd    &amp;&gt;&gt; /tmp/lamp.log
+systemctl enable php-fpm  &amp;&gt;&gt; /tmp/lamp.log
+systemctl enable mariadb  &amp;&gt;&gt; /tmp/lamp.log
+
+systemctl start httpd &amp;&gt;&gt; /tmp/lamp.log
+systemctl start php-fpm &amp;&gt;&gt; /tmp/lamp.log
+systemctl start mariadb&amp;&gt;&gt; /tmp/lamp.log
+
+touch /tmp/testdb.txt
+cat &gt; /tmp/testdb.txt &lt;&lt; of
+create database shen;
+grant all privileges on *.* to shen@&#39;%&#39; identified by &#39;123456&#39;;
+flush privileges;
+of
+
+echo test &gt; /var/www/html/index.html
+
+cat &gt; /var/www/html/phpinfo.php &lt;&lt; of
+&lt;?php
+
+phpinfo ();
+
+?&gt;
+of
+
+
+cat &gt; /var/www/html/testdb.php &lt;&lt; of
+&lt;?php
+
+\$conn = mysql_connect(&#39;$ip&#39;,&#39;shen&#39;,&#39;123456&#39;);
+
+if (\$conn)
+    echo &quot;ok&quot;;
+else
+    echo &quot;not ok&quot;
+?&gt;
+of
+
+
+mysql &lt; /tmp/testdb.txt
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shensir.info/2017/04/02/lamp源码包安装/" data-id="cjb05gx5c001f86zuq1nsmnq2" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-io模型" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/02/io模型/" class="article-date">
+  <time datetime="2017-04-02T04:00:09.000Z" itemprop="datePublished">2017-04-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/02/io模型/">IO模型</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="i-o模型"><a href="#i-o模型" class="headerlink" title="i/o模型"></a><strong>i/o模型</strong></h1><h3 id="同步和异步"><a href="#同步和异步" class="headerlink" title="同步和异步"></a>同步和异步</h3><p>关注的是消息通知机制</p>
+<p>同步:调用发出之后不会立即返回，但一旦返回，即是最终结果</p>
+<p>异步:调用发出之后立即返回消息，但返回的并非最终结果;被调用者通过状态、通知机制等来通知调用者，或通过回调函数来处理</p>
+<h3 id="阻塞和非阻塞"><a href="#阻塞和非阻塞" class="headerlink" title="阻塞和非阻塞"></a>阻塞和非阻塞</h3><p>关注的是调用者等待被调用者返回结果时的状态</p>
+<p>阻塞:调用结果返回之前，调用者会被挂起，调用者只有在得到返回结果之后才能继续;</p>
+<p>非阻塞:调用者在返回结果之前，不会被挂起，即调用不会阻塞调用者;</p>
+<h3 id="i-o复用模型"><a href="#i-o复用模型" class="headerlink" title="i/o复用模型"></a>i/o复用模型</h3><p>I/O复用模型会用到select或者poll函数，这两个函数会使进程阻塞，但是和阻塞不同的是，这个函数可以同时阻塞多个I/O操作。而且可以同时对多个读操作，多个i/o函数进行检测，直到有数据可读或可写时，才真正调用i/o操作函数。</p>
+<h3 id="信号驱动I-O模型"><a href="#信号驱动I-O模型" class="headerlink" title="信号驱动I/O模型"></a>信号驱动I/O模型</h3><p>该模型也叫做事件驱动的I/O模型，这个模型首先允许套接口进行信号驱动I/O，并安装一个信号处理函数，进程继续运行时并不阻塞。当数据准备好时，进程会受到一个SIGIO信号，可以在信号处理函数中调用I/O操作函数处理数据。</p>
+<h3 id="异步I-O模型"><a href="#异步I-O模型" class="headerlink" title="异步I/O模型"></a>异步I/O模型</h3><p>调用aio_read函数，告诉内核描述子，缓冲区指针，缓存区大小，文件偏移以及通知的方式，然后立刻返回。当内核数据拷贝到缓冲区后，在通知应用程序。</p>
+<p>### </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shensir.info/2017/04/02/io模型/" data-id="cjb05gx58001586zu5zx2ei3s" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Notes/">Notes</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">__('next') &raquo;</a>
+  </nav>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP-HEADER/">HTTP HEADER</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Haproxy/">Haproxy</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Keepalived/">Keepalived</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tomcat/">Tomcat</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ca/">Ca</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fastdfs/">Fastdfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP-HEADER/">HTTP HEADER</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Haproxy/">Haproxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Http/">Http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Httpd/">Httpd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Iptables/">Iptables</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keepalived/">Keepalived</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maradb/">Maradb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mariadb/">Mariadb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MogileFS/">MogileFS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Notes/">Notes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ProxySQL/">ProxySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bind/">bind</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/keepalived/">keepalived</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lvs/">lvs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/modules/">modules</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nfs/">nfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/session/">session</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中间件/">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/主从复制/">主从复制</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基础命令/">基础命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文件共享/">文件共享</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/负载均衡/">负载均衡</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Ca/" style="font-size: 10px;">Ca</a> <a href="/tags/Fastdfs/" style="font-size: 10px;">Fastdfs</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/HTTP-HEADER/" style="font-size: 10px;">HTTP HEADER</a> <a href="/tags/Haproxy/" style="font-size: 10px;">Haproxy</a> <a href="/tags/Http/" style="font-size: 13.33px;">Http</a> <a href="/tags/Httpd/" style="font-size: 10px;">Httpd</a> <a href="/tags/Https/" style="font-size: 13.33px;">Https</a> <a href="/tags/Iptables/" style="font-size: 10px;">Iptables</a> <a href="/tags/Keepalived/" style="font-size: 10px;">Keepalived</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Maradb/" style="font-size: 10px;">Maradb</a> <a href="/tags/Mariadb/" style="font-size: 13.33px;">Mariadb</a> <a href="/tags/MogileFS/" style="font-size: 10px;">MogileFS</a> <a href="/tags/Notes/" style="font-size: 13.33px;">Notes</a> <a href="/tags/ProxySQL/" style="font-size: 10px;">ProxySQL</a> <a href="/tags/bind/" style="font-size: 10px;">bind</a> <a href="/tags/keepalived/" style="font-size: 13.33px;">keepalived</a> <a href="/tags/linux/" style="font-size: 16.67px;">linux</a> <a href="/tags/lvs/" style="font-size: 10px;">lvs</a> <a href="/tags/modules/" style="font-size: 10px;">modules</a> <a href="/tags/nfs/" style="font-size: 10px;">nfs</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/web/" style="font-size: 13.33px;">web</a> <a href="/tags/中间件/" style="font-size: 10px;">中间件</a> <a href="/tags/主从复制/" style="font-size: 10px;">主从复制</a> <a href="/tags/分布式文件系统/" style="font-size: 10px;">分布式文件系统</a> <a href="/tags/基础命令/" style="font-size: 10px;">基础命令</a> <a href="/tags/文件共享/" style="font-size: 10px;">文件共享</a> <a href="/tags/负载均衡/" style="font-size: 13.33px;">负载均衡</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/06/12/Fastdfs安装配置/">Fastdfs安装配置</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/Maradb主从复制/">Maradb主从复制</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/Mariadb半同步复制及复制过滤器/">Mariadb半同步复制及复制过滤器</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/Maradb主主复制/">Maradb主主复制</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/MogileFS的安装配置/">MogileFS的安装配置</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Pursuit<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
 </body>
 </html>

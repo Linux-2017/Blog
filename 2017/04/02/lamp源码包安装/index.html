@@ -1,28 +1,348 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8" />
-  <title>Pursuit Blog&#39;s</title>
-  <link rel="icon" href="favicon.ico"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="/css/ionicons.min.css">
-  <link rel="stylesheet" href="/css/milligram.min.css">
-  <link rel="stylesheet" href="/css/comfortaa.css">
-  <link rel="stylesheet" href="/css/source-sans-pro.css">
-  <link rel="stylesheet" href="/css/animate.min.css">
-  <link rel="stylesheet" href="/css/nprogress.css">
-  <link rel="stylesheet" href="/css/loaders.min.css">
-  <link rel="stylesheet" href="/css/atom-one-light.css">
-  <link rel="stylesheet" href="/css/app.css">
+  <meta charset="utf-8">
+  
+  <title>centos7.3构建lamp环境 | Pursuit Blog&#39;s</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="centos7.3构建lamp环境apache 安装httpd依赖包  yum groupinstall “Development Tools” “Server Platform Development” –y yum install pcre-devel –y apr-devel  apr-util-devel op">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="centos7.3构建lamp环境">
+<meta property="og:url" content="https://shensir.info/2017/04/02/lamp源码包安装/index.html">
+<meta property="og:site_name" content="Pursuit Blog&#39;s">
+<meta property="og:description" content="centos7.3构建lamp环境apache 安装httpd依赖包  yum groupinstall “Development Tools” “Server Platform Development” –y yum install pcre-devel –y apr-devel  apr-util-devel openssl-devel apr-devel apr-util-devel ope">
+<meta property="og:updated_time" content="2017-12-09T13:58:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="centos7.3构建lamp环境">
+<meta name="twitter:description" content="centos7.3构建lamp环境apache 安装httpd依赖包  yum groupinstall “Development Tools” “Server Platform Development” –y yum install pcre-devel –y apr-devel  apr-util-devel openssl-devel apr-devel apr-util-devel ope">
+  
+    <link rel="alternate" href="/atom.xml" title="Pursuit Blog&#39;s" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
 </head>
+
 <body>
-  <div id="app"></div>
-  <script type="text/javascript">
-    window.root = "/"
-  </script>
-  <script src="/js/manifest.js"></script>
-  <script src="/js/vendor.js"></script>
-  <script src="/js/app.js"></script>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Pursuit Blog&#39;s</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://shensir.info"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-lamp源码包安装" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/02/lamp源码包安装/" class="article-date">
+  <time datetime="2017-04-02T04:00:09.000Z" itemprop="datePublished">2017-04-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      centos7.3构建lamp环境
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="centos7-3构建lamp环境"><a href="#centos7-3构建lamp环境" class="headerlink" title="centos7.3构建lamp环境"></a>centos7.3构建lamp环境</h2><h3 id="apache"><a href="#apache" class="headerlink" title="apache"></a><strong>apache</strong></h3><ul>
+<li><p>安装httpd依赖包</p>
+<ul>
+<li>yum groupinstall “Development Tools” “Server Platform Development” –y</li>
+<li>yum install pcre-devel –y</li>
+<li>apr-devel  apr-util-devel openssl-devel apr-devel apr-util-devel openssl-devel</li>
+</ul>
+</li>
+<li><p>编译安装</p>
+<p> ./configure –prefix=/usr/local/apache24 –enable-so –enable-ssl  –enable-rewrite –with-zlib –with-pcre –with-apr=/usr –with-apr-util=/usr –enable-modules=most –enable-mpms-shared=all –with-mpm=prefork</p>
+<p>make  -j 2&amp;&amp; make install</p>
+</li>
+</ul>
+<p>  /usr/local/apache24/bin/apachectl start</p>
+<h3 id="Maradb"><a href="#Maradb" class="headerlink" title="Maradb"></a><strong>Maradb</strong></h3><ul>
+<li><p>通用二进制方式安装</p>
+<pre><code class="bash">tar xvf mariadb-5.5.46-linux-x86_64.tar.gz -C /usr/local/
+cd /usr/local/
+ln -sv mariadb-5.5.46-linux-x86_64/ mysql
+groupadd -g 27 mysql
+useradd -u 27 -g mysql mysql
+chown -R root.mysql /usr/local/mysql/
+mkdir /mysqldata
+chown -R mysql.mysql /mysqldata
+mkdir /etc/mysql
+mv /etc/my.cnf{,.bak}
+cd /usr/local/mysql/support-file
+cp my-large.cnf /etc/mysql/my.cnf
+vim /etc/mysql/my.cnf  加入
+datadir = /mysqldata
+skip_name_resolve = ON
+innodb_file_per_table = ON
+cp mysql.server  /etc/init.d/mysqld
+chkconfig --add mysqld
+cd /usr/local/mysql
+./scripts/mysql_install_db --user=mysql --datadir=/mysqldata
+[root@aa mysql]# /etc/init.d/mysqld start
+Starting MySQL.. SUCCESS!
+</code></pre>
+</li>
+</ul>
+<h3 id="Php5-6-4"><a href="#Php5-6-4" class="headerlink" title="Php5.6.4"></a><strong>Php5.6.4</strong></h3><ul>
+<li><p>make -j 4 &amp;&amp; make install安装依赖包</p>
+<blockquote>
+<p>yum install libxml2-devel libmcrypt-devel bzip2-devel  curl-devel  libmcypt libmcrypt-devel(epel源)</p>
+</blockquote>
+</li>
+<li><p>编译安装</p>
+<blockquote>
+<p>tar xvf php5.6.4.tar.xz</p>
+<p>./configure –prefix=/usr/local/php –with-mysql=/usr/local/mysql –with-openssl –with-mysqli=/usr/local/mysql/bin/mysql_config –enable-mbstring –with-freetype-dir –with-jpeg-dir –with-png-dir –with-zlib –with-libxml-dir=/usr –enable-xml –enable-sockets –with-apxs2=/usr/local/apache24/bin/apxs –with-mcrypt  –with-config-file-path=/etc –with-config-file-scan-dir=/etc/php.d –with-bz2  –enable-maintainer-zts  –with-curl</p>
+<p>这里为了支持apache的worker或event这两个MPM，编译时使用了–enable-maintainer-zts选项</p>
+<p>make &amp;&amp; make install</p>
+<p>安装完成后在httpd.conf中加入</p>
+<p>AddType application/x-httpd-php .php</p>
+</blockquote>
+<pre><code class="bash">  &lt;IfModule dir_module&gt;
+       DirectoryIndex index.html index.php
+   &lt;/IfModule&gt;
+</code></pre>
+<p>​</p>
+<p>​</p>
+</li>
+</ul>
+<blockquote>
+<p>Centos 7 yum一键lamp脚本</p>
+</blockquote>
+<pre><code class="bash">#!/bin/bash
+#Author:shen
+#date:Saturday, April 22, 2017 AM10:21:54 CST
+#description: centos 7 lamp
+ip=`ifconfig | sed -n &#39;2p&#39;|awk &#39;{print $2}&#39;`
+yum install httpd php php-fpm php-mysql mariadb-server -y
+
+systemctl enable httpd    &amp;&gt;&gt; /tmp/lamp.log
+systemctl enable php-fpm  &amp;&gt;&gt; /tmp/lamp.log
+systemctl enable mariadb  &amp;&gt;&gt; /tmp/lamp.log
+
+systemctl start httpd &amp;&gt;&gt; /tmp/lamp.log
+systemctl start php-fpm &amp;&gt;&gt; /tmp/lamp.log
+systemctl start mariadb&amp;&gt;&gt; /tmp/lamp.log
+
+touch /tmp/testdb.txt
+cat &gt; /tmp/testdb.txt &lt;&lt; of
+create database shen;
+grant all privileges on *.* to shen@&#39;%&#39; identified by &#39;123456&#39;;
+flush privileges;
+of
+
+echo test &gt; /var/www/html/index.html
+
+cat &gt; /var/www/html/phpinfo.php &lt;&lt; of
+&lt;?php
+
+phpinfo ();
+
+?&gt;
+of
+
+
+cat &gt; /var/www/html/testdb.php &lt;&lt; of
+&lt;?php
+
+\$conn = mysql_connect(&#39;$ip&#39;,&#39;shen&#39;,&#39;123456&#39;);
+
+if (\$conn)
+    echo &quot;ok&quot;;
+else
+    echo &quot;not ok&quot;
+?&gt;
+of
+
+
+mysql &lt; /tmp/testdb.txt
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shensir.info/2017/04/02/lamp源码包安装/" data-id="cjb05gx5c001f86zuq1nsmnq2" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/04/03/page/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          笔记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/04/02/io模型/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">IO模型</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP-HEADER/">HTTP HEADER</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Haproxy/">Haproxy</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Keepalived/">Keepalived</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tomcat/">Tomcat</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ca/">Ca</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fastdfs/">Fastdfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP-HEADER/">HTTP HEADER</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Haproxy/">Haproxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Http/">Http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Httpd/">Httpd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Iptables/">Iptables</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keepalived/">Keepalived</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maradb/">Maradb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mariadb/">Mariadb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MogileFS/">MogileFS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Notes/">Notes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ProxySQL/">ProxySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bind/">bind</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/keepalived/">keepalived</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lvs/">lvs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/modules/">modules</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nfs/">nfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/session/">session</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中间件/">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/主从复制/">主从复制</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基础命令/">基础命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文件共享/">文件共享</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/负载均衡/">负载均衡</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Ca/" style="font-size: 10px;">Ca</a> <a href="/tags/Fastdfs/" style="font-size: 10px;">Fastdfs</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/HTTP-HEADER/" style="font-size: 10px;">HTTP HEADER</a> <a href="/tags/Haproxy/" style="font-size: 10px;">Haproxy</a> <a href="/tags/Http/" style="font-size: 13.33px;">Http</a> <a href="/tags/Httpd/" style="font-size: 10px;">Httpd</a> <a href="/tags/Https/" style="font-size: 13.33px;">Https</a> <a href="/tags/Iptables/" style="font-size: 10px;">Iptables</a> <a href="/tags/Keepalived/" style="font-size: 10px;">Keepalived</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Maradb/" style="font-size: 10px;">Maradb</a> <a href="/tags/Mariadb/" style="font-size: 13.33px;">Mariadb</a> <a href="/tags/MogileFS/" style="font-size: 10px;">MogileFS</a> <a href="/tags/Notes/" style="font-size: 13.33px;">Notes</a> <a href="/tags/ProxySQL/" style="font-size: 10px;">ProxySQL</a> <a href="/tags/bind/" style="font-size: 10px;">bind</a> <a href="/tags/keepalived/" style="font-size: 13.33px;">keepalived</a> <a href="/tags/linux/" style="font-size: 16.67px;">linux</a> <a href="/tags/lvs/" style="font-size: 10px;">lvs</a> <a href="/tags/modules/" style="font-size: 10px;">modules</a> <a href="/tags/nfs/" style="font-size: 10px;">nfs</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/web/" style="font-size: 13.33px;">web</a> <a href="/tags/中间件/" style="font-size: 10px;">中间件</a> <a href="/tags/主从复制/" style="font-size: 10px;">主从复制</a> <a href="/tags/分布式文件系统/" style="font-size: 10px;">分布式文件系统</a> <a href="/tags/基础命令/" style="font-size: 10px;">基础命令</a> <a href="/tags/文件共享/" style="font-size: 10px;">文件共享</a> <a href="/tags/负载均衡/" style="font-size: 13.33px;">负载均衡</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/06/12/Fastdfs安装配置/">Fastdfs安装配置</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/Maradb主从复制/">Maradb主从复制</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/Mariadb半同步复制及复制过滤器/">Mariadb半同步复制及复制过滤器</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/Maradb主主复制/">Maradb主主复制</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/MogileFS的安装配置/">MogileFS的安装配置</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Pursuit<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
 </body>
 </html>

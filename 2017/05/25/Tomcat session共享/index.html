@@ -1,28 +1,425 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8" />
-  <title>Pursuit Blog&#39;s</title>
-  <link rel="icon" href="favicon.ico"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="/css/ionicons.min.css">
-  <link rel="stylesheet" href="/css/milligram.min.css">
-  <link rel="stylesheet" href="/css/comfortaa.css">
-  <link rel="stylesheet" href="/css/source-sans-pro.css">
-  <link rel="stylesheet" href="/css/animate.min.css">
-  <link rel="stylesheet" href="/css/nprogress.css">
-  <link rel="stylesheet" href="/css/loaders.min.css">
-  <link rel="stylesheet" href="/css/atom-one-light.css">
-  <link rel="stylesheet" href="/css/app.css">
+  <meta charset="utf-8">
+  
+  <title>Tomcat session共享 | Pursuit Blog&#39;s</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Tomcat session共享通过memcached-session-manager实现，项目地址https://github.com/magro/memcached-session-manager，实验拓扑如下： 50.71安装配置ansible yum -y install ansible  vim /etc/a">
+<meta name="keywords" content="session">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tomcat session共享">
+<meta property="og:url" content="https://shensir.info/2017/05/25/Tomcat session共享/index.html">
+<meta property="og:site_name" content="Pursuit Blog&#39;s">
+<meta property="og:description" content="Tomcat session共享通过memcached-session-manager实现，项目地址https://github.com/magro/memcached-session-manager，实验拓扑如下： 50.71安装配置ansible yum -y install ansible  vim /etc/ansible/hosts #加入 [tcs] 172.18.50.72 172.">
+<meta property="og:image" content="http://omsab2via.bkt.clouddn.com/session.png">
+<meta property="og:updated_time" content="2017-11-19T13:15:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tomcat session共享">
+<meta name="twitter:description" content="Tomcat session共享通过memcached-session-manager实现，项目地址https://github.com/magro/memcached-session-manager，实验拓扑如下： 50.71安装配置ansible yum -y install ansible  vim /etc/ansible/hosts #加入 [tcs] 172.18.50.72 172.">
+<meta name="twitter:image" content="http://omsab2via.bkt.clouddn.com/session.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Pursuit Blog&#39;s" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
 </head>
+
 <body>
-  <div id="app"></div>
-  <script type="text/javascript">
-    window.root = "/"
-  </script>
-  <script src="/js/manifest.js"></script>
-  <script src="/js/vendor.js"></script>
-  <script src="/js/app.js"></script>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Pursuit Blog&#39;s</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://shensir.info"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Tomcat session共享" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/25/Tomcat session共享/" class="article-date">
+  <time datetime="2017-05-25T07:30:49.000Z" itemprop="datePublished">2017-05-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Tomcat/">Tomcat</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Tomcat session共享
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Tomcat-session共享"><a href="#Tomcat-session共享" class="headerlink" title="Tomcat session共享"></a>Tomcat session共享</h2><p>通过memcached-session-manager实现，项目地址<a href="https://github.com/magro/memcached-session-manager，实验拓扑如下：" target="_blank" rel="noopener">https://github.com/magro/memcached-session-manager，实验拓扑如下：</a><br><img src="http://omsab2via.bkt.clouddn.com/session.png" alt="enter image description here"></p>
+<h3 id="50-71"><a href="#50-71" class="headerlink" title="50.71"></a>50.71</h3><p>安装配置ansible</p>
+<pre><code>yum -y install ansible
+
+vim /etc/ansible/hosts
+#加入
+[tcs]
+172.18.50.72
+172.18.50.73
+[mems]
+172.18.50.61
+172.18.50.62
+#生成key并copy至tcs及mems
+ssh-keygen 
+ssh-copy-id root@172.18.50.72
+ssh-copy-id root@172.18.50.73
+ssh-copy-id root@172.18.50.61
+ssh-copy-id root@172.18.50.62
+ansible all -m ping
+</code></pre><p>关闭防火墙及selink</p>
+<pre><code>[root@71 ansible]# ansible all -m shell -a &#39;iptables -F;setenforce 0&#39;
+172.18.50.61 | SUCCESS | rc=0 &gt;&gt;
+
+
+172.18.50.72 | SUCCESS | rc=0 &gt;&gt;
+
+
+172.18.50.73 | SUCCESS | rc=0 &gt;&gt;
+
+
+172.18.50.62 | SUCCESS | rc=0 &gt;&gt;
+</code></pre><p><strong>同步时间</strong></p>
+<pre><code> cat /etc/ansible/ntp.yml 
+
+- hosts: all
+  remote_user: root
+  tasks:
+  - name: install ntp
+    yum: name=ntp state=latest
+  - name: sync time
+    shell: ntpdate ntp1.aliyun.com
+
+[root@71 ~]# ansible-playbook /etc/ansible/ntp.yml
+#查看是否同步
+[root@71 ~]# ansible all -m shell -a &#39;date&#39;
+172.18.50.61 | SUCCESS | rc=0 &gt;&gt;
+Thu May 25 10:49:24 CST 2017
+
+172.18.50.62 | SUCCESS | rc=0 &gt;&gt;
+Thu May 25 10:49:25 CST 2017
+
+172.18.50.73 | SUCCESS | rc=0 &gt;&gt;
+Thu May 25 10:49:25 CST 2017
+
+172.18.50.72 | SUCCESS | rc=0 &gt;&gt;
+Thu May 25 10:49:25 CST 2017
+</code></pre><p><strong>安装tomcat</strong></p>
+<pre><code>[root@71 ansible]# cat tomcat.yml 
+---
+
+- hosts: tcs
+  remote_user: root
+  tasks:
+  - name: install tomcat
+    yum: name=tomcat,tomcat-webapps  state=latest
+  - name: start tomcat
+    service: name=tomcat state=started
+[root@71 ansible]# ansible-playbook tomcat.yml
+</code></pre><p><strong>安装memcached</strong></p>
+<pre><code>[root@71 ~]# cat /etc/ansible/mems.yml 
+---
+
+- hosts: mems
+  remote_user: root
+  tasks:
+  - name: install memcached
+    yum: name=memcached state=latest
+  - name: start memcached
+    service: name=memcached state=started
+[root@71 ~]# ansible-playbook /etc/ansible/mems.yml
+</code></pre><p>安装httpd并实现负载均衡</p>
+<pre><code>yum -y install httpd
+#在conf/httpd.conf中插入
+&lt;Proxy balancer://tomcat&gt;
+    BalancerMember  http://172.18.50.72:8080 loadfactor=1
+    BalancerMember  http://172.18.50.73:8080 loadfactor=1
+    ProxySet  lbmethod=byrequests
+&lt;/Proxy&gt;
+ProxyVia Off
+ProxyRequests Off
+ProxyPass / balancer://tomcat/
+ProxyPassReverse / balancer://tomcat/
+&lt;Proxy *&gt;
+    Order Allow,Deny
+    Allow From all
+&lt;/Proxy&gt;
+&lt;Location /&gt;
+    Order Allow,Deny
+    Allow From all
+&lt;/Location&gt;
+</code></pre><h4 id="安装配置-memcached-session-manager"><a href="#安装配置-memcached-session-manager" class="headerlink" title="安装配置 memcached-session-manager"></a>安装配置 memcached-session-manager</h4><ul>
+<li>下载jar文件<pre><code>下载如下jar文件至各tomcat节点的tomcat安装目录下的lib目录中，其中的${version}要换成你所需要的版本号，tc${6,7,8}要换成与tomcat版本相同的版本号。
+  memcached-session-manager-${version}.jar
+  memcached-session-manager-tc${6,7,8}-${version}.jar
+  spymemcached-${version}.jar
+  msm-javolution-serializer-${version}.jar
+  javolution-${version}.jar
+</code></pre></li>
+<li>使用ansible推送至tcs<br>```<br>[root@71 ~]# ls<br>anaconda-ks.cfg  javolution-5.4.3.1.jar               memcached-session-manager-tc7-1.8.3.jar  spymemcached-2.11.1.jar<br>copy_jar.yml     memcached-session-manager-1.8.3.jar  msm-javolution-serializer-1.8.3.jar<br>[root@71 ~]# cat copy_jar.yml </li>
+</ul>
+<hr>
+<ul>
+<li>hosts: tcs<br>remote_user: root<br>tasks:<ul>
+<li>name: copy jar to tcs<br>copy: src=~/ dest=/usr/share/tomcat/lib<br>with_items:<ul>
+<li>“memcached-session-manager-tc7-1.8.3.jar”</li>
+<li>“javolution-5.4.3.1.jar”</li>
+<li>“memcached-session-manager-1.8.3.jar”</li>
+<li>“spymemcached-2.11.1.jar”</li>
+<li>“msm-javolution-serializer-1.8.3.jar”</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>**配置tomcat1**
+tomcat2配置与1除测试页外一致
+</code></pre><p>mkdir -pv /usr/share/tomcat/webapps/test/{classes,lib,WEB-INF}<br>cat /usr/share/tomcat/test/webapps/test/index.jsp<br>&lt;%@ page language=”java” %&gt;</p>
+<p><html><br>  <head><title>TomcatB</title></head><br>  <body><br>    <h1><font color="blue">TomcatB</font></h1><br>    <table align="centre" border="1"><br>      <tr><br>        <td>Session ID</td><br>    &lt;% session.setAttribute(“test.com”,”test.com”); %&gt;<br>        <td>&lt;%= session.getId() %&gt;</td><br>      </tr><br>      <tr><br>        <td>Created on</td><br>        <td>&lt;%= session.getCreationTime() %&gt;</td><br>     </tr><br>    </table><br>  </body><br></html><br>[root@73 test]# cat /etc/tomcat/server.xml<br>&lt;?xml version=’1.0’ encoding=’utf-8’?&gt;<br>&lt;!–<br>  Licensed to the Apache Software Foundation (ASF) under one or more<br>  contributor license agreements.  See the NOTICE file distributed with<br>  this work for additional information regarding copyright ownership.<br>  The ASF licenses this file to You under the Apache License, Version 2.0<br>  (the “License”); you may not use this file except in compliance with<br>  the License.  You may obtain a copy of the License at</p>
+<pre><code>  http://www.apache.org/licenses/LICENSE-2.0
+</code></pre><p>  Unless required by applicable law or agreed to in writing, software<br>  distributed under the License is distributed on an “AS IS” BASIS,<br>  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<br>  See the License for the specific language governing permissions and<br>  limitations under the License.<br>–&gt;<br><!-- Note:  A "Server" is not itself a "Container", so you may not
+     define subcomponents such as "Valves" at this level.
+     Documentation at /docs/config/server.html
+ --></p>
+<server port="8005" shutdown="SHUTDOWN"><br>  <listener classname="org.apache.catalina.startup.VersionLoggerListener"><br>  <!-- Security listener. Documentation at /docs/config/listeners.html
+  <Listener className="org.apache.catalina.security.SecurityListener" />
+  --><br>  <!--APR library loader. Documentation at /docs/apr.html --><br>  <listener classname="org.apache.catalina.core.AprLifecycleListener" sslengine="on"><br>  <!--Initialize Jasper prior to webapps are loaded. Documentation at /docs/jasper-howto.html --><br>  <listener classname="org.apache.catalina.core.JasperListener"><br>  <!-- Prevent memory leaks due to use of particular java/javax APIs--><br>  <listener classname="org.apache.catalina.core.JreMemoryLeakPreventionListener"><br>  <listener classname="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener"><br>  <listener classname="org.apache.catalina.core.ThreadLocalLeakPreventionListener"><br><br>  <!-- Global JNDI resources
+       Documentation at /docs/jndi-resources-howto.html
+  --><br>  <globalnamingresources><br>    <!-- Editable user database that can also be used by
+         UserDatabaseRealm to authenticate users
+    --><br>    <resource name="UserDatabase" auth="Container" type="org.apache.catalina.UserDatabase" description="User database that can be updated and saved" factory="org.apache.catalina.users.MemoryUserDatabaseFactory" pathname="conf/tomcat-users.xml"><br>  </resource></globalnamingresources><br><br>  <!-- A "Service" is a collection of one or more "Connectors" that share
+       a single "Container" Note:  A "Service" is not itself a "Container",
+       so you may not define subcomponents such as "Valves" at this level.
+       Documentation at /docs/config/service.html
+   --><br>  <service name="Catalina"><br><br>    <!--The connectors can use a shared executor, you can define one or more named thread pools--><br>    <!--
+    <Executor name="tomcatThreadPool" namePrefix="catalina-exec-"
+        maxThreads="150" minSpareThreads="4"/>
+    --><br><br><br>    <!-- A "Connector" represents an endpoint by which requests are received
+         and responses are returned. Documentation at :
+         Java HTTP Connector: /docs/config/http.html (blocking & non-blocking)
+         Java AJP  Connector: /docs/config/ajp.html
+         APR (HTTP/AJP) Connector: /docs/apr.html
+         Define a non-SSL HTTP/1.1 Connector on port 8080
+    --><br>    <connector port="8080" protocol="HTTP/1.1" connectiontimeout="20000" redirectport="8443"><br>    <!-- A "Connector" using the shared thread pool--><br>    <!--
+    <Connector executor="tomcatThreadPool"
+               port="8080" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443" />
+    --><br>    <!-- Define a SSL HTTP/1.1 Connector on port 8443
+         This connector uses the BIO implementation that requires the JSSE
+         style configuration. When using the APR/native implementation, the
+         OpenSSL style configuration is required as described in the APR/native
+         documentation --><br>    <!--
+    <Connector port="8443" protocol="org.apache.coyote.http11.Http11Protocol"
+               maxThreads="150" SSLEnabled="true" scheme="https" secure="true"
+               clientAuth="false" sslProtocol="TLS" />
+    --><br><br>    <!-- Define an AJP 1.3 Connector on port 8009 --><br>    <connector port="8009" protocol="AJP/1.3" redirectport="8443"><br><br><br>    <!-- An Engine represents the entry point (within Catalina) that processes
+         every request.  The Engine implementation for Tomcat stand alone
+         analyzes the HTTP headers included with the request, and passes them
+         on to the appropriate Host (virtual host).
+         Documentation at /docs/config/engine.html --><br><br>    <!-- You should set jvmRoute to support load-balancing via AJP ie :
+    <Engine name="Catalina" defaultHost="localhost" jvmRoute="jvm1">
+    --><br>    <engine name="Catalina" defaulthost="localhost"><br><br>      <!--For clustering, please take a look at documentation at:
+          /docs/cluster-howto.html  (simple how to)
+          /docs/config/cluster.html (reference documentation) --><br>      <!--
+      <Cluster className="org.apache.catalina.ha.tcp.SimpleTcpCluster"/>
+      --><br><br>      <!-- Use the LockOutRealm to prevent attempts to guess user passwords
+           via a brute-force attack --><br>      <realm classname="org.apache.catalina.realm.LockOutRealm"><br>        <!-- This Realm uses the UserDatabase configured in the global JNDI
+             resources under the key "UserDatabase".  Any edits
+             that are performed against this UserDatabase are immediately
+             available for use by the Realm.  --><br>        <realm classname="org.apache.catalina.realm.UserDatabaseRealm" resourcename="UserDatabase"><br>      </realm><br><br>      <host name="localhost" appbase="webapps" unpackwars="true" autodeploy="true"><br><br>        <!-- SingleSignOn valve, share authentication between web applications
+             Documentation at: /docs/config/valve.html --><br>        <!--
+        <Valve className="org.apache.catalina.authenticator.SingleSignOn" />
+        --><br><br>        <!-- Access log processes all example.
+             Documentation at: /docs/config/valve.html
+             Note: The pattern used is equivalent to using pattern="common" --><br>        <valve classname="org.apache.catalina.valves.AccessLogValve" directory="logs" prefix="localhost_access_log." suffix=".txt" pattern="%h %l %u %t &quot;%r&quot; %s %b"><br>        <context path="/test" docbase="/usr/share/tomcat/webapps/test" reloadable="true"><br>              <manager classname="de.javakaffee.web.msm.MemcachedBackupSessionManager" memcachednodes="n1:172.18.50.61:11211,n2:172.18.50.62:11211" failovernodes="n1" requesturiignorepattern=".*\.(ico|png|gif|jpg|css|js)$" transcoderfactoryclass="de.javakaffee.web.msm.serializer.javolution.JavolutionTranscoderFactory"><br>        </manager></context><br>      </valve></host><br>    </realm></engine><br>  </connector></connector></service><br></listener></listener></listener></listener></listener></listener></server>
+
+<p>```<br><strong>测试</strong></p>
+<blockquote>
+<p><a href="http://172.18.50.71" target="_blank" rel="noopener">http://172.18.50.71</a><br>TomcatA<br>Session ID<br>3F96F6A4657D50881AC523F6A7AF787F-n2<br>Created on<br>1495693301965<br>刷新后为<br>TomcatB<br>Session ID<br>3F96F6A4657D50881AC523F6A7AF787F-n2<br>Created on<br>1495693301965<br>stop n2后为 n1</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shensir.info/2017/05/25/Tomcat session共享/" data-id="cjb05gx4t000a86zugtzll2bv" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/session/">session</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/12/ProxySQL1.3.6配置/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ProxySQL1.3.6配置
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/05/25/http_header/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">HTTP HEADER</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP-HEADER/">HTTP HEADER</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Haproxy/">Haproxy</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Keepalived/">Keepalived</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tomcat/">Tomcat</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ca/">Ca</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fastdfs/">Fastdfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP-HEADER/">HTTP HEADER</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Haproxy/">Haproxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Http/">Http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Httpd/">Httpd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Iptables/">Iptables</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keepalived/">Keepalived</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maradb/">Maradb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mariadb/">Mariadb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MogileFS/">MogileFS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Notes/">Notes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ProxySQL/">ProxySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bind/">bind</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/keepalived/">keepalived</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lvs/">lvs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/modules/">modules</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nfs/">nfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/session/">session</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中间件/">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/主从复制/">主从复制</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基础命令/">基础命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文件共享/">文件共享</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/负载均衡/">负载均衡</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Ca/" style="font-size: 10px;">Ca</a> <a href="/tags/Fastdfs/" style="font-size: 10px;">Fastdfs</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/HTTP-HEADER/" style="font-size: 10px;">HTTP HEADER</a> <a href="/tags/Haproxy/" style="font-size: 10px;">Haproxy</a> <a href="/tags/Http/" style="font-size: 13.33px;">Http</a> <a href="/tags/Httpd/" style="font-size: 10px;">Httpd</a> <a href="/tags/Https/" style="font-size: 13.33px;">Https</a> <a href="/tags/Iptables/" style="font-size: 10px;">Iptables</a> <a href="/tags/Keepalived/" style="font-size: 10px;">Keepalived</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Maradb/" style="font-size: 10px;">Maradb</a> <a href="/tags/Mariadb/" style="font-size: 13.33px;">Mariadb</a> <a href="/tags/MogileFS/" style="font-size: 10px;">MogileFS</a> <a href="/tags/Notes/" style="font-size: 13.33px;">Notes</a> <a href="/tags/ProxySQL/" style="font-size: 10px;">ProxySQL</a> <a href="/tags/bind/" style="font-size: 10px;">bind</a> <a href="/tags/keepalived/" style="font-size: 13.33px;">keepalived</a> <a href="/tags/linux/" style="font-size: 16.67px;">linux</a> <a href="/tags/lvs/" style="font-size: 10px;">lvs</a> <a href="/tags/modules/" style="font-size: 10px;">modules</a> <a href="/tags/nfs/" style="font-size: 10px;">nfs</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/web/" style="font-size: 13.33px;">web</a> <a href="/tags/中间件/" style="font-size: 10px;">中间件</a> <a href="/tags/主从复制/" style="font-size: 10px;">主从复制</a> <a href="/tags/分布式文件系统/" style="font-size: 10px;">分布式文件系统</a> <a href="/tags/基础命令/" style="font-size: 10px;">基础命令</a> <a href="/tags/文件共享/" style="font-size: 10px;">文件共享</a> <a href="/tags/负载均衡/" style="font-size: 13.33px;">负载均衡</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/06/12/Fastdfs安装配置/">Fastdfs安装配置</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/Maradb主从复制/">Maradb主从复制</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/Mariadb半同步复制及复制过滤器/">Mariadb半同步复制及复制过滤器</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/Maradb主主复制/">Maradb主主复制</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/MogileFS的安装配置/">MogileFS的安装配置</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Pursuit<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
 </body>
 </html>

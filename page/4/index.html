@@ -1,28 +1,253 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8">
+  
   <title>Pursuit Blog&#39;s</title>
-  <link rel="icon" href="favicon.ico"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="/css/ionicons.min.css">
-  <link rel="stylesheet" href="/css/milligram.min.css">
-  <link rel="stylesheet" href="/css/comfortaa.css">
-  <link rel="stylesheet" href="/css/source-sans-pro.css">
-  <link rel="stylesheet" href="/css/animate.min.css">
-  <link rel="stylesheet" href="/css/nprogress.css">
-  <link rel="stylesheet" href="/css/loaders.min.css">
-  <link rel="stylesheet" href="/css/atom-one-light.css">
-  <link rel="stylesheet" href="/css/app.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Pursuit Blog&#39;s">
+<meta property="og:url" content="https://shensir.info/page/4/index.html">
+<meta property="og:site_name" content="Pursuit Blog&#39;s">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pursuit Blog&#39;s">
+  
+    <link rel="alternate" href="/atom.xml" title="Pursuit Blog&#39;s" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
 </head>
+
 <body>
-  <div id="app"></div>
-  <script type="text/javascript">
-    window.root = "/"
-  </script>
-  <script src="/js/manifest.js"></script>
-  <script src="/js/vendor.js"></script>
-  <script src="/js/app.js"></script>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Pursuit Blog&#39;s</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://shensir.info"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-index" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/02/index/" class="article-date">
+  <time datetime="2017-04-02T04:00:09.000Z" itemprop="datePublished">2017-04-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/02/index/">notes</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="复习"><a href="#复习" class="headerlink" title="复习"></a>复习</h1><p>PS1</p>
+<pre><code class="shell">PS1=&quot;\[\E[31m\][\u@\h \w]\\$\[\e[0m\]]&quot;
+</code></pre>
+<p>\e \033         \u 当前用户<br>\h 主机名简称     \H 主机名<br>\w 当前工作目录     \W 当前工作目录基名<br>\t 24小时时间格式\T 12小时时间格式<br>! 命令历史数     #开机后命令历史数</p>
+<h2 id="shell中可执行命令有两类"><a href="#shell中可执行命令有两类" class="headerlink" title="shell中可执行命令有两类"></a>shell中可执行命令有两类</h2><p>内部命令:由shell自带的，而且可以通过某命令形式提供</p>
+<pre><code>help 内部命令列表
+enable cmd 启用
+enable -n cmd 禁用内部命令
+enable -n 查看所有禁用的内部命令
+</code></pre><p>外部命令:在文件系统路径下有对应的可执行程序文件</p>
+<h2 id="查看路径-which-a-–skip-alias-whereis"><a href="#查看路径-which-a-–skip-alias-whereis" class="headerlink" title="查看路径:which -a | –skip-alias; whereis"></a>查看路径:which -a | –skip-alias; whereis</h2><h2 id="查看制定的命令是内部还是外部-type-command"><a href="#查看制定的命令是内部还是外部-type-command" class="headerlink" title="查看制定的命令是内部还是外部 type command"></a>查看制定的命令是内部还是外部 type command</h2><h2 id="执行外部命令"><a href="#执行外部命令" class="headerlink" title="执行外部命令"></a>执行外部命令</h2><h3 id="Hash缓存表"><a href="#Hash缓存表" class="headerlink" title="Hash缓存表"></a>Hash缓存表</h3><pre><code>系统初始hash表为空，当外部命令执行时，默认会到PATH路径下寻找该命令，找到后会将这条命令的路径记录到hash表中，当再次使用该命令时，shell解释器首先会查看hash表，存在将执行之，如果不存在，将会去path路径下寻找。利用hash缓存表可大大提供命令的调用速率。
+</code></pre><h3 id="常见的用法"><a href="#常见的用法" class="headerlink" title="常见的用法"></a>常见的用法</h3><pre><code>hash 显示hash缓存
+hash -l 显示hash缓存，可作为输入使用
+hash -p path name 将命令全路径path起别名为name
+hash -t name 打印缓存中name的路径
+hash -d name 清除name缓存
+hash -r 清楚缓存
+</code></pre><h3 id="如果命令别名同原命令同名，如果要执行原命令，可使用-command"><a href="#如果命令别名同原命令同名，如果要执行原命令，可使用-command" class="headerlink" title="如果命令别名同原命令同名，如果要执行原命令，可使用\command"></a>如果命令别名同原命令同名，如果要执行原命令，可使用\command</h3><h3 id="date"><a href="#date" class="headerlink" title="date"></a>date</h3><p>系统时钟:由Linux内核通过cpu工作频率进行的<br>硬件时钟:主板<br>hwclock,clock:显示硬件时钟<br>/etc/localtime 时区</p>
+<h3 id="screen"><a href="#screen" class="headerlink" title="screen"></a>screen</h3><p>创建:screen -S [session]<br>键入:screen -x<br>剥离当前screen会话:ctrl+a,d<br>显示所有:screen -ls<br>恢复:screen -r </p>
+<h2 id="echo"><a href="#echo" class="headerlink" title="echo"></a>echo</h2><p>-E 默认 不支持\解释功能<br>-n 不自动换行<br>-e 启用\字符的解释功能</p>
+<pre><code>\a 发出警告声
+\b 退格键
+\c 最后不加上换行符号
+\n 换行且光标移至行首
+\r 回车，即光标移至行首
+\t 插入tab
+\\插入\字符
+\0nnn 插入nnn(八进制) 所代表的ASCII字符
+\xHH插入HH(十六进制) 所代表的ASCII字
+</code></pre><h2 id="双击TAB键"><a href="#双击TAB键" class="headerlink" title="双击TAB键"></a>双击TAB键</h2><p>command 2tab 所有命令行补全<br>string2tab 以string开头命令<br>/2tab 显示所有根目录下一级目录，包括隐藏目录<br>./2tab 当前目录下的子目录，包括隐藏目录<br>*2tab 当前目录下子目录，不包括隐藏目录<br>～2tab 所有用户列表<br>$2tab 所有变量<br>@2tab /etc/hosts记录<br>=2tab 相当与ls -A</p>
+<h2 id="命令行历史"><a href="#命令行历史" class="headerlink" title="命令行历史"></a>命令行历史</h2><p>重复前一个命令，有四种方法<br>    ！！<br>    ！-1<br>    ctrl + p<br>    上方向键<br>ctrl + n 显示当前历史中的下一条命令，但不执行<br>！n 执行history命令输出对应序号n的命令<br>！-n 执行history历史中倒数的第n个命令<br>！string 重复前一个以“string”开头的命令<br>！string:p 仅打印 不执行<br>！$:p 打印输出!$的内容<br>！<em>:p 打印输出!</em>(所有参数)的内容<br>^string 删除上一条命令中的string<br>^string1^string2 将上一条命令中的第一个string1替换为string2<br>!!:gs/string1/string2 将上一条命令中所有的string1都替换为string2<br>调用前一个命令的最后一个参数:$!;esc .;alt .;<br>command !^:上一个命令的一个参数做cmd的参数<br>    !$:最后一个参数<br>    !<em>:全部参数<br>    !:n:第n个参数<br>command !n:^ 调用第n条命令的第一个参数<br>    !n:$<br>    !n:m<br>    !n:</em><br>command !string:^ 从命令历史中搜索以string开头的命令，并获取它的第一个参数<br>    !string:$<br>    !string:n<br>    !string:*<br>history<br>    -c 情况命令历史<br>    -d offset 删除历史中第offset个命令<br>     n 显示最近的n条历史<br>    -a 追加本次会话新执行的命令历史列表至历史文件<br>    -n 读历史文件中未读的行到历史列表<br>    -r 读历史文件附加到历史列表<br>    -w 保存历史列表到指定的历史文件<br>    -p 展开历史参数成多行，但不存在历史列表中<br>    -s 展开历史参数成一行，附加在历史列表后<br>HISTSIZE：命令历史记录的条数<br>HISTFILE：指定历史文件，默认为～/.bash_history<br>HISTFILESIZE:命令历史文件记录历史的条数<br>HISTTIMEFORMAT=“%F %T” 显示时间<br>HISTIGNORE=“str1:str2:…” 忽略string1,string2历史<br>控制命令历史的记录方式:<br>环境变量:HISTCONTROL</p>
+<pre><code>ignoredups 默认,忽略重复的命令，连续且相同为”重复“
+ignorespace 忽略所有以空白开头的命令
+ignoreboth edups and space
+erasedups 删除重复命令
+</code></pre><p>export 变量名=”值“</p>
+<p>bash 快捷键<br>ctrl + l 清屏<br>ctrl + o 执行当前命令，并重新显示本命令<br>ctrl + s 阻止屏幕输出，锁定<br>ctrl + q 允许屏幕输出<br>ctrl + c 终止命令<br>ctrl + z 挂起命令<br>ctrl + a 光标移动到命令行首,相当与home<br>ctrl + e 光标移动到行尾，相当与end<br>ctrl + f 光标向右移动一个字符<br>ctrl + b 光标向左移动一个字符<br>alt + f 光标向右移动一个单词尾<br>alt + b 光标向左移动一个单词首<br>ctrl + xx 光标在命令行首和光标之间移动<br>ctrl + u 从光标处删除至命令行尾<br>ctrl + k 从光标处删除至命令行尾<br>ctrl + w 从光标处向左删除只单词首<br>alt + d 从光标处向右删除至单词尾<br>ctrl + d 删除光标处的一个字符<br>ctrl + h 删除光标前的一个字符<br>ctrl + y 将删除的字符粘贴至光标后<br>alt + c 从光标出开始向右更改为首字母大写的单词<br>alt + u 从光标处开始向右更改为全部大写的单词<br>alt + l 从光标处更改为全部小写的单词<br>ctrl + t 交换光标处和之前字符位置<br>alt + t 交换光标处和之前的单词位置<br>alt + N 提示输入指定字符后，重复显示该字符Ｎ次<br>注意:alt组合快捷键经常和其他软件冲突</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shensir.info/2017/04/02/index/" data-id="cjb05gx59001886zux1x0c9mz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Notes/">Notes</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+  </nav>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP-HEADER/">HTTP HEADER</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Haproxy/">Haproxy</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Keepalived/">Keepalived</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tomcat/">Tomcat</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ca/">Ca</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fastdfs/">Fastdfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP-HEADER/">HTTP HEADER</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Haproxy/">Haproxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Http/">Http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Httpd/">Httpd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Iptables/">Iptables</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keepalived/">Keepalived</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maradb/">Maradb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mariadb/">Mariadb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MogileFS/">MogileFS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Notes/">Notes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ProxySQL/">ProxySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bind/">bind</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/keepalived/">keepalived</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lvs/">lvs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/modules/">modules</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nfs/">nfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/session/">session</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中间件/">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/主从复制/">主从复制</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基础命令/">基础命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文件共享/">文件共享</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/负载均衡/">负载均衡</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Ca/" style="font-size: 10px;">Ca</a> <a href="/tags/Fastdfs/" style="font-size: 10px;">Fastdfs</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/HTTP-HEADER/" style="font-size: 10px;">HTTP HEADER</a> <a href="/tags/Haproxy/" style="font-size: 10px;">Haproxy</a> <a href="/tags/Http/" style="font-size: 13.33px;">Http</a> <a href="/tags/Httpd/" style="font-size: 10px;">Httpd</a> <a href="/tags/Https/" style="font-size: 13.33px;">Https</a> <a href="/tags/Iptables/" style="font-size: 10px;">Iptables</a> <a href="/tags/Keepalived/" style="font-size: 10px;">Keepalived</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Maradb/" style="font-size: 10px;">Maradb</a> <a href="/tags/Mariadb/" style="font-size: 13.33px;">Mariadb</a> <a href="/tags/MogileFS/" style="font-size: 10px;">MogileFS</a> <a href="/tags/Notes/" style="font-size: 13.33px;">Notes</a> <a href="/tags/ProxySQL/" style="font-size: 10px;">ProxySQL</a> <a href="/tags/bind/" style="font-size: 10px;">bind</a> <a href="/tags/keepalived/" style="font-size: 13.33px;">keepalived</a> <a href="/tags/linux/" style="font-size: 16.67px;">linux</a> <a href="/tags/lvs/" style="font-size: 10px;">lvs</a> <a href="/tags/modules/" style="font-size: 10px;">modules</a> <a href="/tags/nfs/" style="font-size: 10px;">nfs</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/web/" style="font-size: 13.33px;">web</a> <a href="/tags/中间件/" style="font-size: 10px;">中间件</a> <a href="/tags/主从复制/" style="font-size: 10px;">主从复制</a> <a href="/tags/分布式文件系统/" style="font-size: 10px;">分布式文件系统</a> <a href="/tags/基础命令/" style="font-size: 10px;">基础命令</a> <a href="/tags/文件共享/" style="font-size: 10px;">文件共享</a> <a href="/tags/负载均衡/" style="font-size: 13.33px;">负载均衡</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/06/12/Fastdfs安装配置/">Fastdfs安装配置</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/Maradb主从复制/">Maradb主从复制</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/Mariadb半同步复制及复制过滤器/">Mariadb半同步复制及复制过滤器</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/Maradb主主复制/">Maradb主主复制</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/MogileFS的安装配置/">MogileFS的安装配置</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Pursuit<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
 </body>
 </html>
