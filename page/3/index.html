@@ -59,161 +59,6 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-blog" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/04/18/blog/" class="article-date">
-  <time datetime="2017-04-18T06:14:08.000Z" itemprop="datePublished">2017-04-18</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux/">Linux</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/18/blog/">文件查找与解压缩</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="文件查找与解压缩"><a href="#文件查找与解压缩" class="headerlink" title="文件查找与解压缩"></a>文件查找与解压缩</h1><h2 id="Locate"><a href="#Locate" class="headerlink" title="Locate"></a>Locate</h2><p>查询系统上预建的文件索引数据库<br>/var/lib/mlocate/mlocate.db<br>依赖于事先构建的索引<br>索引的构建是在系统较为空闲时自动进行(周期性任务),管理员手动更新数据库(updatedb)<br>索引构建过程需要遍历整个根文件系统,极消耗资源</p>
-<pre><code>locate KEYWORD
-    -i 不区分大小写的搜索
-    -n N 之列举N个匹配项目
-    -r 使用Regex来搜索
-</code></pre><h2 id="Find"><a href="#Find" class="headerlink" title="Find"></a>Find</h2><p>find [OPTION]… [查找路径] [查找条件] [处理动作]<br>查找路径:指定具体目标路径;默认为当前目录<br>查找条件:指定的查找标准,可以文件名、大小、类型、权限等标准进行;默认为找出指定路径下的所有文件<br>处理动作:对符合条件的文件做操作,默认输出至屏幕<br>指搜索层级</p>
-<pre><code>-maxdepth level 最大搜索目录深度,指定目录为第1级
--mindepth level 最大搜索目录深度
-</code></pre><p>根据文件名和inode查找:</p>
-<pre><code>-name &quot;文件名称&quot;:支持使用glob *, ?, [], [^]
--iname &quot;文件名称&quot;:不区分字母大小写
--inum n 按inode号查找
--samefile name 相同inode号的文件
--links n 链接数为n的文件
--regex &quot;PATTERN&quot;:以PATTERN匹配整个文件路径字符串,而不仅仅是文件名称
-</code></pre><p>根据属主、属组查找:</p>
-<pre><code>-user USERNAME:查找属主为指定用户(UID)的文件
--group GRPNAME: 查找属组为指定组(GID)的文件
--uid UserID:查找属主为指定的UID号的文件
--gid GroupID:查找属组为指定的GID号的文件
--nouser:查找没有属主的文件
--nogroup:查找没有属组的文件
-</code></pre><p>根据文件类型查找:</p>
-<pre><code>-type TYPE:
-• f: 普通文件
-• d: 目录文件
-• l: 符号链接文件
-• s:套接字文件
-• b: 块设备文件
-• c: 字符设备文件
-• p: 管道文件
-</code></pre><p> 组合条件:</p>
-<pre><code>与:-a
-或:-o
-非:-not, !
-</code></pre><p>德· 摩根定律:<br>(非 A) 或 (非 B) = 非(A 且 B)<br>(非 A) 且 (非 B) = 非(A 或 B)<br> 示例:<br>!A -a !B = !(A -o B)<br>!A -o !B = !(A -a B)</p>
-<p>根据权限查找:</p>
-<pre><code>-perm [/|-]MODE
-MODE: 精确权限匹配
-/MODE:任何一类(u,g,o)对象的权限中只要能一位匹配即可,或关系,+ 从centos7开始淘汰
--MODE:每一类对象都必须同时拥有指定权限,与关系0 表示不关注
-• find -perm 755 会匹配权限模式恰好是755的文件
-• 只要当任意人有写权限时,find -perm +222就会匹配
-• 只有当每个人都有写权限时,find -perm -222才会匹配
-• 只有当其它人(other)有写权限时,find -perm -002才会匹配
-</code></pre><p>处理动作</p>
-<pre><code> -print:默认的处理动作,显示至屏幕
- -ls:类似于对查找到的文件执行“ls -l”命令
- -delete:删除查找到的文件
- -fls file:查找到的所有文件的长格式信息保存至指定文件中
- -ok COMMAND {} \; 对查找到的每个文件执行由 COMMAND指定的命令,对于每个文件执行命令之前,
- -exec COMMAND {} \; 对查找到的每个文件执行由COMMAND指定的命令
- {}: 用于引用查找到的文件名称自身
- find传递查找到的文件至后面指定的命令时,查找到所有符合条件的文件一次性传递给后面的命令都会交互式要求用户确认
-</code></pre><p>参数替换xargs</p>
-<pre><code>由于很多命令不支持管道|来传递参数,而日常工作中有这个必要,所以就有了xargs命令
-xargs用于产生某个命令的参数,xargs 可以读入 stdin 的数据,并且以空格符或回车符将 stdin 的数据分隔成为arguments
-注意:文件名或者是其他意义的名词内含有空格符的情况
-有些命令不能接受过多参数,命令执行可能会失败,xargs可以解决
-</code></pre><p> 示例:</p>
-<pre><code>ls f* |xargs rm
-find /sbin -perm +700 |ls -l 这个命令是错误的
-find /sbin -perm +7000 | xargs ls –l
-find和xargs格式:find | xargs COMMAND
-</code></pre><h2 id="压缩、解压缩及归档工具"><a href="#压缩、解压缩及归档工具" class="headerlink" title="压缩、解压缩及归档工具"></a>压缩、解压缩及归档工具</h2><pre><code> file-roller
- compress/uncompress: .Z
- gzip/gunzip: .gz
- bzip2/bunzip2: .bz2
- xz/unxz: .xz
- zip/unzip
- tar
- cpio
-</code></pre><h3 id="compress-uncompress"><a href="#compress-uncompress" class="headerlink" title="compress/uncompress"></a>compress/uncompress</h3><p> compress [-dfvcVr] [-b maxbits] [file …]</p>
-<pre><code>-d: 解压缩,相当于uncompress
--c: 结果输出至标准输出,不删除原文件
--v: 显示详情
-</code></pre><p> uncompress 解压缩<br> zcat file.Z &gt;file</p>
-<h3 id="gzip-gunzip"><a href="#gzip-gunzip" class="headerlink" title="gzip/gunzip"></a>gzip/gunzip</h3><p>gzip [OPTION]… FILE …</p>
-<pre><code>-d: 解压缩,相当于gunzip
--c: 将压缩或解压缩的结果输出至标准输出
--#:1-9,指定压缩比,值越大压缩比越大
-zcat:不显式解压缩的前提下查看文本文件内容
-实例:
-gzip -c messages &gt;messages.gz
-gzip -c -d messages.gz &gt; messages
-zcat messages.gz &gt; messages
-</code></pre><h3 id="bzip2-bunzip2-bzcat"><a href="#bzip2-bunzip2-bzcat" class="headerlink" title="bzip2/bunzip2/bzcat"></a>bzip2/bunzip2/bzcat</h3><p>bzip2 [OPTION]… FILE …</p>
-<pre><code>-k: keep, 保留原文件
--d:解压缩
--#:1-9,压缩比,默认为6
-</code></pre><p>bzcat:不显式解压缩的前提下查看文本文件内容</p>
-<h3 id="xz-unxz-xzcat"><a href="#xz-unxz-xzcat" class="headerlink" title="xz/unxz/xzcat"></a>xz/unxz/xzcat</h3><p>xz [OPTION]… FILE …</p>
-<pre><code>-k: keep, 保留原文件
--d:解压缩
--#:1-9,压缩比,默认为6
-</code></pre><p>xzcat: 不显式解压缩的前提下查看文本文件内容</p>
-<h2 id="tar工具"><a href="#tar工具" class="headerlink" title="tar工具"></a>tar工具</h2><p>Tar(Tape ARchive,磁带归档的缩写)<br>tar [OPTION]…<br>(1) 创建归档<br>tar -c -f /PATH/TO/SOMEFILE.tar FILE…<br>(2) 追加文件至归档: 注:不支持对压缩文件追加<br>tar -r -f /PATH/TO/SOMEFILE.tar FILE…<br>(3) 查看归档文件中的文件列表<br>tar -t -f /PATH/TO/SOMEFILE.tar<br>(4) 展开归档<br>tar -x -f /PATH/TO/SOMEFILE.tar<br>tar -x -f /PATH/TO/SOMEFILE.tar -C /PATH/<br>(5) 结合压缩工具实现:归档并压缩<br>-j: bzip2, -z: gzip, -J: xz<br>-T选项指定输入文件,-X选项指定包含要排除的文件列表<br>tar zcvf mybackup.tgz -T /root/includefilelist -X<br>/root/excludefilelist<br>分割大的 tar 文件为多份小文件:<br>split –b Size –d tar-file-name prefix-name<br>split -b 1M –d mybackup.tgz mybackup-parts<br>split -b 1M mybackup.tgz mybackup-parts<br>合并:<br>cat mybackup-parts* &gt; mybackup.tar.gz</p>
-<h2 id="cpio"><a href="#cpio" class="headerlink" title="cpio"></a>cpio</h2><p>cpio命令是通过重定向的方式将文件打包备份，还原恢复的工具，它可以解压已”.cpio”结尾或者”.tar”<br>cpio [选项] &gt; 文件名或者设备名<br>cpio [选项] &lt; 文件名或者设备名<br>选项</p>
-<pre><code>-o 将文件拷贝打包成文件或者将文件输出到设备上
--i 解包，将打包文件解压或将设备上的备份还原到系统
--t 预览，查看文件内容或者输出到设备上的文件内容
--v 显示打包过程中的文件名称
--d 解包生产目录，在cpio还原时，自动的建立目录
--c 一种较新的存储方式
-</code></pre><p>示例</p>
-<pre><code>将Etc目录备份
-    fin ./etc -print|cpio -ov &gt;etc.cpio
-内容预览
-    cpio -tv &lt; etc.cpio 
-</code></pre><pre><code class="shell">    ls /etc
-    pwd
-    ls
-</code></pre>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://shensir.info/2017/04/18/blog/" data-id="cjb05gx4y000k86zu5q7ng08x" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/基础命令/">基础命令</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
     <article id="post-bind编译安装" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/04/18/bind编译安装/" class="article-date">
@@ -369,10 +214,165 @@ zcat messages.gz &gt; messages
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shensir.info/2017/04/18/bind编译安装/" data-id="cjb05gx4x000i86zujzc15guw" class="article-share-link">Share</a>
+      <a data-url="https://shensir.info/2017/04/18/bind编译安装/" data-id="cjb05oymu000i9fzue53lka2d" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bind/">bind</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-blog" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/18/blog/" class="article-date">
+  <time datetime="2017-04-18T06:14:08.000Z" itemprop="datePublished">2017-04-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/18/blog/">文件查找与解压缩</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="文件查找与解压缩"><a href="#文件查找与解压缩" class="headerlink" title="文件查找与解压缩"></a>文件查找与解压缩</h1><h2 id="Locate"><a href="#Locate" class="headerlink" title="Locate"></a>Locate</h2><p>查询系统上预建的文件索引数据库<br>/var/lib/mlocate/mlocate.db<br>依赖于事先构建的索引<br>索引的构建是在系统较为空闲时自动进行(周期性任务),管理员手动更新数据库(updatedb)<br>索引构建过程需要遍历整个根文件系统,极消耗资源</p>
+<pre><code>locate KEYWORD
+    -i 不区分大小写的搜索
+    -n N 之列举N个匹配项目
+    -r 使用Regex来搜索
+</code></pre><h2 id="Find"><a href="#Find" class="headerlink" title="Find"></a>Find</h2><p>find [OPTION]… [查找路径] [查找条件] [处理动作]<br>查找路径:指定具体目标路径;默认为当前目录<br>查找条件:指定的查找标准,可以文件名、大小、类型、权限等标准进行;默认为找出指定路径下的所有文件<br>处理动作:对符合条件的文件做操作,默认输出至屏幕<br>指搜索层级</p>
+<pre><code>-maxdepth level 最大搜索目录深度,指定目录为第1级
+-mindepth level 最大搜索目录深度
+</code></pre><p>根据文件名和inode查找:</p>
+<pre><code>-name &quot;文件名称&quot;:支持使用glob *, ?, [], [^]
+-iname &quot;文件名称&quot;:不区分字母大小写
+-inum n 按inode号查找
+-samefile name 相同inode号的文件
+-links n 链接数为n的文件
+-regex &quot;PATTERN&quot;:以PATTERN匹配整个文件路径字符串,而不仅仅是文件名称
+</code></pre><p>根据属主、属组查找:</p>
+<pre><code>-user USERNAME:查找属主为指定用户(UID)的文件
+-group GRPNAME: 查找属组为指定组(GID)的文件
+-uid UserID:查找属主为指定的UID号的文件
+-gid GroupID:查找属组为指定的GID号的文件
+-nouser:查找没有属主的文件
+-nogroup:查找没有属组的文件
+</code></pre><p>根据文件类型查找:</p>
+<pre><code>-type TYPE:
+• f: 普通文件
+• d: 目录文件
+• l: 符号链接文件
+• s:套接字文件
+• b: 块设备文件
+• c: 字符设备文件
+• p: 管道文件
+</code></pre><p> 组合条件:</p>
+<pre><code>与:-a
+或:-o
+非:-not, !
+</code></pre><p>德· 摩根定律:<br>(非 A) 或 (非 B) = 非(A 且 B)<br>(非 A) 且 (非 B) = 非(A 或 B)<br> 示例:<br>!A -a !B = !(A -o B)<br>!A -o !B = !(A -a B)</p>
+<p>根据权限查找:</p>
+<pre><code>-perm [/|-]MODE
+MODE: 精确权限匹配
+/MODE:任何一类(u,g,o)对象的权限中只要能一位匹配即可,或关系,+ 从centos7开始淘汰
+-MODE:每一类对象都必须同时拥有指定权限,与关系0 表示不关注
+• find -perm 755 会匹配权限模式恰好是755的文件
+• 只要当任意人有写权限时,find -perm +222就会匹配
+• 只有当每个人都有写权限时,find -perm -222才会匹配
+• 只有当其它人(other)有写权限时,find -perm -002才会匹配
+</code></pre><p>处理动作</p>
+<pre><code> -print:默认的处理动作,显示至屏幕
+ -ls:类似于对查找到的文件执行“ls -l”命令
+ -delete:删除查找到的文件
+ -fls file:查找到的所有文件的长格式信息保存至指定文件中
+ -ok COMMAND {} \; 对查找到的每个文件执行由 COMMAND指定的命令,对于每个文件执行命令之前,
+ -exec COMMAND {} \; 对查找到的每个文件执行由COMMAND指定的命令
+ {}: 用于引用查找到的文件名称自身
+ find传递查找到的文件至后面指定的命令时,查找到所有符合条件的文件一次性传递给后面的命令都会交互式要求用户确认
+</code></pre><p>参数替换xargs</p>
+<pre><code>由于很多命令不支持管道|来传递参数,而日常工作中有这个必要,所以就有了xargs命令
+xargs用于产生某个命令的参数,xargs 可以读入 stdin 的数据,并且以空格符或回车符将 stdin 的数据分隔成为arguments
+注意:文件名或者是其他意义的名词内含有空格符的情况
+有些命令不能接受过多参数,命令执行可能会失败,xargs可以解决
+</code></pre><p> 示例:</p>
+<pre><code>ls f* |xargs rm
+find /sbin -perm +700 |ls -l 这个命令是错误的
+find /sbin -perm +7000 | xargs ls –l
+find和xargs格式:find | xargs COMMAND
+</code></pre><h2 id="压缩、解压缩及归档工具"><a href="#压缩、解压缩及归档工具" class="headerlink" title="压缩、解压缩及归档工具"></a>压缩、解压缩及归档工具</h2><pre><code> file-roller
+ compress/uncompress: .Z
+ gzip/gunzip: .gz
+ bzip2/bunzip2: .bz2
+ xz/unxz: .xz
+ zip/unzip
+ tar
+ cpio
+</code></pre><h3 id="compress-uncompress"><a href="#compress-uncompress" class="headerlink" title="compress/uncompress"></a>compress/uncompress</h3><p> compress [-dfvcVr] [-b maxbits] [file …]</p>
+<pre><code>-d: 解压缩,相当于uncompress
+-c: 结果输出至标准输出,不删除原文件
+-v: 显示详情
+</code></pre><p> uncompress 解压缩<br> zcat file.Z &gt;file</p>
+<h3 id="gzip-gunzip"><a href="#gzip-gunzip" class="headerlink" title="gzip/gunzip"></a>gzip/gunzip</h3><p>gzip [OPTION]… FILE …</p>
+<pre><code>-d: 解压缩,相当于gunzip
+-c: 将压缩或解压缩的结果输出至标准输出
+-#:1-9,指定压缩比,值越大压缩比越大
+zcat:不显式解压缩的前提下查看文本文件内容
+实例:
+gzip -c messages &gt;messages.gz
+gzip -c -d messages.gz &gt; messages
+zcat messages.gz &gt; messages
+</code></pre><h3 id="bzip2-bunzip2-bzcat"><a href="#bzip2-bunzip2-bzcat" class="headerlink" title="bzip2/bunzip2/bzcat"></a>bzip2/bunzip2/bzcat</h3><p>bzip2 [OPTION]… FILE …</p>
+<pre><code>-k: keep, 保留原文件
+-d:解压缩
+-#:1-9,压缩比,默认为6
+</code></pre><p>bzcat:不显式解压缩的前提下查看文本文件内容</p>
+<h3 id="xz-unxz-xzcat"><a href="#xz-unxz-xzcat" class="headerlink" title="xz/unxz/xzcat"></a>xz/unxz/xzcat</h3><p>xz [OPTION]… FILE …</p>
+<pre><code>-k: keep, 保留原文件
+-d:解压缩
+-#:1-9,压缩比,默认为6
+</code></pre><p>xzcat: 不显式解压缩的前提下查看文本文件内容</p>
+<h2 id="tar工具"><a href="#tar工具" class="headerlink" title="tar工具"></a>tar工具</h2><p>Tar(Tape ARchive,磁带归档的缩写)<br>tar [OPTION]…<br>(1) 创建归档<br>tar -c -f /PATH/TO/SOMEFILE.tar FILE…<br>(2) 追加文件至归档: 注:不支持对压缩文件追加<br>tar -r -f /PATH/TO/SOMEFILE.tar FILE…<br>(3) 查看归档文件中的文件列表<br>tar -t -f /PATH/TO/SOMEFILE.tar<br>(4) 展开归档<br>tar -x -f /PATH/TO/SOMEFILE.tar<br>tar -x -f /PATH/TO/SOMEFILE.tar -C /PATH/<br>(5) 结合压缩工具实现:归档并压缩<br>-j: bzip2, -z: gzip, -J: xz<br>-T选项指定输入文件,-X选项指定包含要排除的文件列表<br>tar zcvf mybackup.tgz -T /root/includefilelist -X<br>/root/excludefilelist<br>分割大的 tar 文件为多份小文件:<br>split –b Size –d tar-file-name prefix-name<br>split -b 1M –d mybackup.tgz mybackup-parts<br>split -b 1M mybackup.tgz mybackup-parts<br>合并:<br>cat mybackup-parts* &gt; mybackup.tar.gz</p>
+<h2 id="cpio"><a href="#cpio" class="headerlink" title="cpio"></a>cpio</h2><p>cpio命令是通过重定向的方式将文件打包备份，还原恢复的工具，它可以解压已”.cpio”结尾或者”.tar”<br>cpio [选项] &gt; 文件名或者设备名<br>cpio [选项] &lt; 文件名或者设备名<br>选项</p>
+<pre><code>-o 将文件拷贝打包成文件或者将文件输出到设备上
+-i 解包，将打包文件解压或将设备上的备份还原到系统
+-t 预览，查看文件内容或者输出到设备上的文件内容
+-v 显示打包过程中的文件名称
+-d 解包生产目录，在cpio还原时，自动的建立目录
+-c 一种较新的存储方式
+</code></pre><p>示例</p>
+<pre><code>将Etc目录备份
+    fin ./etc -print|cpio -ov &gt;etc.cpio
+内容预览
+    cpio -tv &lt; etc.cpio 
+</code></pre><pre><code class="shell">    ls /etc
+    pwd
+    ls
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://shensir.info/2017/04/18/blog/" data-id="cjb05oymv000j9fzu5k5jtayq" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/基础命令/">基础命令</a></li></ul>
 
     </footer>
   </div>
@@ -528,7 +528,7 @@ openssl req -new -key $key_client  -out  /etc/pki/tls/test.csr -days $c_time &am
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shensir.info/2017/04/11/ca/" data-id="cjb05gx4z000n86zub6uxm6i4" class="article-share-link">Share</a>
+      <a data-url="https://shensir.info/2017/04/11/ca/" data-id="cjb05oymw000l9fzuzndtm65g" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ca/">Ca</a></li></ul>
@@ -855,7 +855,7 @@ openssl req -new -key $key_client  -out  /etc/pki/tls/test.csr -days $c_time &am
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shensir.info/2017/04/08/systemd/" data-id="cjb05gx5l001x86zu2t3dl2i7" class="article-share-link">Share</a>
+      <a data-url="https://shensir.info/2017/04/08/systemd/" data-id="cjb05oynn00249fzu3or0n6ly" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
@@ -1152,7 +1152,7 @@ abrt 173
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shensir.info/2017/04/08/awk/" data-id="cjb05gx4w000f86zu2ada8o17" class="article-share-link">Share</a>
+      <a data-url="https://shensir.info/2017/04/08/awk/" data-id="cjb05oymt000e9fzuychni15y" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
@@ -1283,7 +1283,7 @@ abrt 173
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shensir.info/2017/04/05/selinux/" data-id="cjb05gx5k001w86zuxkxu9o4c" class="article-share-link">Share</a>
+      <a data-url="https://shensir.info/2017/04/05/selinux/" data-id="cjb05oyni001w9fzukra3mjwg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
@@ -1413,7 +1413,7 @@ abrt 173
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shensir.info/2017/04/03/vim/" data-id="cjb05gx5o001z86zuafg3zmgk" class="article-share-link">Share</a>
+      <a data-url="https://shensir.info/2017/04/03/vim/" data-id="cjb05oynl001y9fzu5m0kfjks" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
@@ -1504,7 +1504,7 @@ chmod o-t dir
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shensir.info/2017/04/03/page/" data-id="cjb05gx5j001t86zutk9p2dh9" class="article-share-link">Share</a>
+      <a data-url="https://shensir.info/2017/04/03/page/" data-id="cjb05oynh001t9fzufwl9unna" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
@@ -1661,7 +1661,7 @@ mysql &lt; /tmp/testdb.txt
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shensir.info/2017/04/02/lamp源码包安装/" data-id="cjb05gx5c001f86zuq1nsmnq2" class="article-share-link">Share</a>
+      <a data-url="https://shensir.info/2017/04/02/lamp源码包安装/" data-id="cjb05oyna001f9fzukpar4bdp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
@@ -1713,7 +1713,7 @@ mysql &lt; /tmp/testdb.txt
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shensir.info/2017/04/02/io模型/" data-id="cjb05gx58001586zu5zx2ei3s" class="article-share-link">Share</a>
+      <a data-url="https://shensir.info/2017/04/02/io模型/" data-id="cjb05oyn600179fzuq3jpx3g1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Notes/">Notes</a></li></ul>
@@ -1784,7 +1784,7 @@ mysql &lt; /tmp/testdb.txt
           </li>
         
           <li>
-            <a href="/2017/06/12/Maradb主从复制/">Maradb主从复制</a>
+            <a href="/2017/06/12/Maradb主主复制/">Maradb主主复制</a>
           </li>
         
           <li>
@@ -1792,11 +1792,11 @@ mysql &lt; /tmp/testdb.txt
           </li>
         
           <li>
-            <a href="/2017/06/12/Maradb主主复制/">Maradb主主复制</a>
+            <a href="/2017/06/12/MogileFS的安装配置/">MogileFS的安装配置</a>
           </li>
         
           <li>
-            <a href="/2017/06/12/MogileFS的安装配置/">MogileFS的安装配置</a>
+            <a href="/2017/06/12/Maradb主从复制/">Maradb主从复制</a>
           </li>
         
       </ul>
