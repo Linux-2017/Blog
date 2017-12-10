@@ -503,7 +503,7 @@ nginx:x:996:994:nginx user:/var/cache/nginx:/sbin/nologin
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shensir.info/2017/06/12/Fastdfs安装配置/" data-id="cjb05oymh00019fzuo8yh03zo" class="article-share-link">Share</a>
+      <a data-url="https://shensir.info/2017/06/12/Fastdfs安装配置/" data-id="cjb07228k0001gezubcehzbi1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Fastdfs/">Fastdfs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式文件系统/">分布式文件系统</a></li></ul>
@@ -515,9 +515,9 @@ nginx:x:996:994:nginx user:/var/cache/nginx:/sbin/nologin
 
 
   
-    <article id="post-Maradb主主复制" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Maradb主从复制" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/06/12/Maradb主主复制/" class="article-date">
+    <a href="/2017/06/12/Maradb主从复制/" class="article-date">
   <time datetime="2017-06-12T13:28:08.000Z" itemprop="datePublished">2017-06-12</time>
 </a>
     
@@ -529,7 +529,7 @@ nginx:x:996:994:nginx user:/var/cache/nginx:/sbin/nologin
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/12/Maradb主主复制/">Maradb主主复制</a>
+      <a class="article-title" href="/2017/06/12/Maradb主从复制/">Maradb主从复制</a>
     </h1>
   
 
@@ -537,27 +537,11 @@ nginx:x:996:994:nginx user:/var/cache/nginx:/sbin/nologin
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Maradb主主复制"><a href="#Maradb主主复制" class="headerlink" title="Maradb主主复制"></a>Maradb主主复制</h2><blockquote>
-<p>互为主从：两个节点各自都要开启binlog和relay log；</p>
-</blockquote>
-<ol>
-<li>数据不一致；</li>
-<li>自动增长id；</li>
-</ol>
-<p><strong>定义一个节点使用奇数id</strong></p>
-<pre><code>auto_increment_offset=1
-auto_increment_increment=2
-</code></pre><p><strong>定义一个节点使用偶数id</strong></p>
-<pre><code>auto_increment_offset=2
-auto_increment_increment=2
-</code></pre><h4 id="MASTER1-172-18-50-72"><a href="#MASTER1-172-18-50-72" class="headerlink" title="MASTER1(172.18.50.72)"></a>MASTER1(172.18.50.72)</h4><p>/etc/my.cnf.d/server.cnf添加</p>
+        <h2 id="Maradb主从复制"><a href="#Maradb主从复制" class="headerlink" title="Maradb主从复制"></a>Maradb主从复制</h2><h4 id="MASTER-172-18-50-72"><a href="#MASTER-172-18-50-72" class="headerlink" title="MASTER(172.18.50.72)"></a>MASTER(172.18.50.72)</h4><p>vim /etc/my.cnf.d/server.cnf添加</p>
 <pre><code>innodb_file_per_table=ON
 skip_name_resolve=ON
 log_bin=mysql-bin
 server_id=1
-relay_log=relay-log
-auto_increment_offset=1
-auto_increment_increment=2
 </code></pre><p>授权slave服务器</p>
 <pre><code>GRANT REPLICATION SLAVE,REPLICATION CLIENT ON *.* TO test@&#39;172.18.50.73&#39; IDENTIFIED BY &#39;test123&#39;;
 </code></pre><p>查看二进制文件</p>
@@ -565,55 +549,67 @@ auto_increment_increment=2
 +------------------+----------+--------------+------------------+
 | File             | Position | Binlog_Do_DB | Binlog_Ignore_DB |
 +------------------+----------+--------------+------------------+
-| mysql-bin.000003 |      491 |              |                  |
+| mysql-bin.000005 |      503 |              |                  |
 +------------------+----------+--------------+------------------+
-</code></pre><p>同步参数配置</p>
-<pre><code>CHANGE MASTER TO MASTER_HOST=&#39;172.18.50.73&#39;,MASTER_USER=&#39;test&#39;,MASTER_PASSWORD=&#39;test123&#39;,MASTER_LOG_FILE=&#39;mysql-bin.000003&#39;,MASTER_LOG_POS=491;
-</code></pre><p>开启slave</p>
-<pre><code>START SLAVE;
-</code></pre><h4 id="MASTER2-172-18-50-73"><a href="#MASTER2-172-18-50-73" class="headerlink" title="MASTER2(172.18.50.73)"></a>MASTER2(172.18.50.73)</h4><p>/etc/my.cnf.d/server.cnf添加</p>
-<pre><code>innodb_file_per_table=ON
+MariaDB [(none)]&gt; SHOW BINARY LOGS;
++------------------+-----------+
+| Log_name         | File_size |
++------------------+-----------+
+| mysql-bin.000001 |       288 |
+| mysql-bin.000002 |       848 |
+| mysql-bin.000003 |      1629 |
+| mysql-bin.000004 |       811 |
+| mysql-bin.000005 |       503 |
++------------------+-----------+
+5 rows in set (0.00 sec)
+</code></pre><h4 id="SLAVE-172-18-50-73"><a href="#SLAVE-172-18-50-73" class="headerlink" title="SLAVE(172.18.50.73)"></a>SLAVE(172.18.50.73)</h4><p>在/etc/my.cnf.d/server.cnf中加入</p>
+<pre><code>[mysqld]
 skip_name_resolve=ON
-log_bin=mysql-bin
+innodb_file_per_table=ON
 server_id=2
 relay_log=relay-log
-auto_increment_offset=2
-auto_increment_increment=2
-</code></pre><p>授权slave服务器</p>
-<pre><code>GRANT REPLICATION SLAVE,REPLICATION CLIENT ON *.* TO test@&#39;172.18.50.72&#39; IDENTIFIED BY &#39;test123&#39;;
-</code></pre><p>查看二进制文件</p>
-<pre><code>MariaDB [(none)]&gt; SHOW MASTER STATUS;
-+------------------+----------+--------------+------------------+
-| File             | Position | Binlog_Do_DB | Binlog_Ignore_DB |
-+------------------+----------+--------------+------------------+
-| mysql-bin.000003 |      491 |              |                  |
-+------------------+----------+--------------+------------------+
-</code></pre><p>同步参数配置</p>
-<pre><code>CHANGE MASTER TO MASTER_HOST=&#39;172.18.50.72&#39;,MASTER_USER=&#39;test&#39;,MASTER_PASSWORD=&#39;test123&#39;,MASTER_LOG_FILE=&#39;mysql-bin.000003&#39;,MASTER_LOG_POS=491;
-</code></pre><p>开启slave</p>
+</code></pre><p>授权</p>
+<pre><code>CHANGE MASTER TO MASTER_HOST=&#39;172.18.50.72&#39;,MASTER_USER=&#39;test&#39;,MASTER_PASSWORD=&#39;test123&#39;,MASTER_LOG_FILE=&#39;mysql-bin.000005&#39;,MASTER_LOG_POS=503;
+</code></pre><p>启动slave,IO和SQL为Yes说明启动成功</p>
 <pre><code>START SLAVE;
-</code></pre><h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><p>MASTER1</p>
-<pre><code>CREATE TABLE tbl1 (id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,name VARCHAR(20));
-insert into tbl1 (name) VALUES (&#39;a1&#39;),(&#39;a2&#39;);
-</code></pre><p>MASTER2</p>
-<pre><code>insert into tbl1 (name) VALUES (&#39;a1&#39;),(&#39;a2&#39;);
-MariaDB [mytest]&gt; select * from tbl1;
-+----+------+
-| id | name |
-+----+------+
-|  1 | a1   |
-|  3 | a2   |
-|  4 | a1   |
-|  6 | a2   |
-+----+------+
-</code></pre>
+SHOW SLAVE STATUS\G
+Slave_IO_Running: Yes
+Slave_SQL_Running: Yes
+</code></pre><p> <strong>复制时需要注意的地方：</strong></p>
+<ol>
+<li><p>从服务应该设定为只读<br>在从服务器启动read_only,但对非SUPER权限的用户有效；</p>
+<pre><code>show global variables like &quot;%read_only%&quot;;    
+MariaDB [(none)]&gt; SET @@GLOBAL.read_only=ON;
+</code></pre><pre><code>阻止所有用户
+</code></pre><pre><code>MariaDB [(none)]&gt; FLUSH TABLES WITH READ LOCK;
+Query OK, 0 rows affected (0.00 sec)
+</code></pre></li>
+<li><p>尽量确保复制时的事务安全<br>在master节点启用参数</p>
+<pre><code>MariaDB [(none)]&gt; set @@global.sync_binlog=1;
+</code></pre><p>如果是Innodb存储引擎,确保下面两项是on状态</p>
+<pre><code>  MariaDB [(none)]&gt; show variables like &#39;innodb%trx%&#39;;
+  +-------------------------------------------+-------+
+  | Variable_name                             | Value |
+  +-------------------------------------------+-------+
+  | innodb_flush_log_at_trx_commit            | 1     |
+  | innodb_use_global_flush_log_at_trx_commit | ON    |
+  +-------------------------------------------+-------+
+</code></pre></li>
+<li>从服务器意外终止时尽量避免自动启动复制线程</li>
+<li><p>从节点：设置参数</p>
+<pre><code>MariaDB [(none)]&gt; set @@global.sync_master_info=1;
+MariaDB [(none)]&gt; set @@global.sync_master_info=ON
+</code></pre><p>​</p>
+</li>
+</ol>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shensir.info/2017/06/12/Maradb主主复制/" data-id="cjb05oymn00059fzuixpozqgm" class="article-share-link">Share</a>
+      <a data-url="https://shensir.info/2017/06/12/Maradb主从复制/" data-id="cjb07228q0005gezut7ccn80e" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Maradb/">Maradb</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mariadb/">Mariadb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/主从复制/">主从复制</a></li></ul>
 
     </footer>
   </div>
@@ -734,7 +730,7 @@ Replicate__Wild_Ignore_DB=    #根据表面通配符做黑名单
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shensir.info/2017/06/12/Mariadb半同步复制及复制过滤器/" data-id="cjb05oymo00069fzul3xvn1gq" class="article-share-link">Share</a>
+      <a data-url="https://shensir.info/2017/06/12/Mariadb半同步复制及复制过滤器/" data-id="cjb07228r0006gezugn96dxrd" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mariadb/">Mariadb</a></li></ul>
@@ -1207,7 +1203,7 @@ cpan&gt; install App:cpanminus
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shensir.info/2017/06/12/MogileFS的安装配置/" data-id="cjb05oymp00079fzu8jzb3rfl" class="article-share-link">Share</a>
+      <a data-url="https://shensir.info/2017/06/12/MogileFS的安装配置/" data-id="cjb07228s0007gezup5b6x0xt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MogileFS/">MogileFS</a></li></ul>
@@ -1219,9 +1215,9 @@ cpan&gt; install App:cpanminus
 
 
   
-    <article id="post-Maradb主从复制" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Maradb主主复制" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/06/12/Maradb主从复制/" class="article-date">
+    <a href="/2017/06/12/Maradb主主复制/" class="article-date">
   <time datetime="2017-06-12T13:28:08.000Z" itemprop="datePublished">2017-06-12</time>
 </a>
     
@@ -1233,7 +1229,7 @@ cpan&gt; install App:cpanminus
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/12/Maradb主从复制/">Maradb主从复制</a>
+      <a class="article-title" href="/2017/06/12/Maradb主主复制/">Maradb主主复制</a>
     </h1>
   
 
@@ -1241,11 +1237,27 @@ cpan&gt; install App:cpanminus
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Maradb主从复制"><a href="#Maradb主从复制" class="headerlink" title="Maradb主从复制"></a>Maradb主从复制</h2><h4 id="MASTER-172-18-50-72"><a href="#MASTER-172-18-50-72" class="headerlink" title="MASTER(172.18.50.72)"></a>MASTER(172.18.50.72)</h4><p>vim /etc/my.cnf.d/server.cnf添加</p>
+        <h2 id="Maradb主主复制"><a href="#Maradb主主复制" class="headerlink" title="Maradb主主复制"></a>Maradb主主复制</h2><blockquote>
+<p>互为主从：两个节点各自都要开启binlog和relay log；</p>
+</blockquote>
+<ol>
+<li>数据不一致；</li>
+<li>自动增长id；</li>
+</ol>
+<p><strong>定义一个节点使用奇数id</strong></p>
+<pre><code>auto_increment_offset=1
+auto_increment_increment=2
+</code></pre><p><strong>定义一个节点使用偶数id</strong></p>
+<pre><code>auto_increment_offset=2
+auto_increment_increment=2
+</code></pre><h4 id="MASTER1-172-18-50-72"><a href="#MASTER1-172-18-50-72" class="headerlink" title="MASTER1(172.18.50.72)"></a>MASTER1(172.18.50.72)</h4><p>/etc/my.cnf.d/server.cnf添加</p>
 <pre><code>innodb_file_per_table=ON
 skip_name_resolve=ON
 log_bin=mysql-bin
 server_id=1
+relay_log=relay-log
+auto_increment_offset=1
+auto_increment_increment=2
 </code></pre><p>授权slave服务器</p>
 <pre><code>GRANT REPLICATION SLAVE,REPLICATION CLIENT ON *.* TO test@&#39;172.18.50.73&#39; IDENTIFIED BY &#39;test123&#39;;
 </code></pre><p>查看二进制文件</p>
@@ -1253,67 +1265,55 @@ server_id=1
 +------------------+----------+--------------+------------------+
 | File             | Position | Binlog_Do_DB | Binlog_Ignore_DB |
 +------------------+----------+--------------+------------------+
-| mysql-bin.000005 |      503 |              |                  |
+| mysql-bin.000003 |      491 |              |                  |
 +------------------+----------+--------------+------------------+
-MariaDB [(none)]&gt; SHOW BINARY LOGS;
-+------------------+-----------+
-| Log_name         | File_size |
-+------------------+-----------+
-| mysql-bin.000001 |       288 |
-| mysql-bin.000002 |       848 |
-| mysql-bin.000003 |      1629 |
-| mysql-bin.000004 |       811 |
-| mysql-bin.000005 |       503 |
-+------------------+-----------+
-5 rows in set (0.00 sec)
-</code></pre><h4 id="SLAVE-172-18-50-73"><a href="#SLAVE-172-18-50-73" class="headerlink" title="SLAVE(172.18.50.73)"></a>SLAVE(172.18.50.73)</h4><p>在/etc/my.cnf.d/server.cnf中加入</p>
-<pre><code>[mysqld]
+</code></pre><p>同步参数配置</p>
+<pre><code>CHANGE MASTER TO MASTER_HOST=&#39;172.18.50.73&#39;,MASTER_USER=&#39;test&#39;,MASTER_PASSWORD=&#39;test123&#39;,MASTER_LOG_FILE=&#39;mysql-bin.000003&#39;,MASTER_LOG_POS=491;
+</code></pre><p>开启slave</p>
+<pre><code>START SLAVE;
+</code></pre><h4 id="MASTER2-172-18-50-73"><a href="#MASTER2-172-18-50-73" class="headerlink" title="MASTER2(172.18.50.73)"></a>MASTER2(172.18.50.73)</h4><p>/etc/my.cnf.d/server.cnf添加</p>
+<pre><code>innodb_file_per_table=ON
 skip_name_resolve=ON
-innodb_file_per_table=ON
+log_bin=mysql-bin
 server_id=2
 relay_log=relay-log
-</code></pre><p>授权</p>
-<pre><code>CHANGE MASTER TO MASTER_HOST=&#39;172.18.50.72&#39;,MASTER_USER=&#39;test&#39;,MASTER_PASSWORD=&#39;test123&#39;,MASTER_LOG_FILE=&#39;mysql-bin.000005&#39;,MASTER_LOG_POS=503;
-</code></pre><p>启动slave,IO和SQL为Yes说明启动成功</p>
+auto_increment_offset=2
+auto_increment_increment=2
+</code></pre><p>授权slave服务器</p>
+<pre><code>GRANT REPLICATION SLAVE,REPLICATION CLIENT ON *.* TO test@&#39;172.18.50.72&#39; IDENTIFIED BY &#39;test123&#39;;
+</code></pre><p>查看二进制文件</p>
+<pre><code>MariaDB [(none)]&gt; SHOW MASTER STATUS;
++------------------+----------+--------------+------------------+
+| File             | Position | Binlog_Do_DB | Binlog_Ignore_DB |
++------------------+----------+--------------+------------------+
+| mysql-bin.000003 |      491 |              |                  |
++------------------+----------+--------------+------------------+
+</code></pre><p>同步参数配置</p>
+<pre><code>CHANGE MASTER TO MASTER_HOST=&#39;172.18.50.72&#39;,MASTER_USER=&#39;test&#39;,MASTER_PASSWORD=&#39;test123&#39;,MASTER_LOG_FILE=&#39;mysql-bin.000003&#39;,MASTER_LOG_POS=491;
+</code></pre><p>开启slave</p>
 <pre><code>START SLAVE;
-SHOW SLAVE STATUS\G
-Slave_IO_Running: Yes
-Slave_SQL_Running: Yes
-</code></pre><p> <strong>复制时需要注意的地方：</strong></p>
-<ol>
-<li><p>从服务应该设定为只读<br>在从服务器启动read_only,但对非SUPER权限的用户有效；</p>
-<pre><code>show global variables like &quot;%read_only%&quot;;    
-MariaDB [(none)]&gt; SET @@GLOBAL.read_only=ON;
-</code></pre><pre><code>阻止所有用户
-</code></pre><pre><code>MariaDB [(none)]&gt; FLUSH TABLES WITH READ LOCK;
-Query OK, 0 rows affected (0.00 sec)
-</code></pre></li>
-<li><p>尽量确保复制时的事务安全<br>在master节点启用参数</p>
-<pre><code>MariaDB [(none)]&gt; set @@global.sync_binlog=1;
-</code></pre><p>如果是Innodb存储引擎,确保下面两项是on状态</p>
-<pre><code>  MariaDB [(none)]&gt; show variables like &#39;innodb%trx%&#39;;
-  +-------------------------------------------+-------+
-  | Variable_name                             | Value |
-  +-------------------------------------------+-------+
-  | innodb_flush_log_at_trx_commit            | 1     |
-  | innodb_use_global_flush_log_at_trx_commit | ON    |
-  +-------------------------------------------+-------+
-</code></pre></li>
-<li>从服务器意外终止时尽量避免自动启动复制线程</li>
-<li><p>从节点：设置参数</p>
-<pre><code>MariaDB [(none)]&gt; set @@global.sync_master_info=1;
-MariaDB [(none)]&gt; set @@global.sync_master_info=ON
-</code></pre><p>​</p>
-</li>
-</ol>
-
+</code></pre><h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><p>MASTER1</p>
+<pre><code>CREATE TABLE tbl1 (id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,name VARCHAR(20));
+insert into tbl1 (name) VALUES (&#39;a1&#39;),(&#39;a2&#39;);
+</code></pre><p>MASTER2</p>
+<pre><code>insert into tbl1 (name) VALUES (&#39;a1&#39;),(&#39;a2&#39;);
+MariaDB [mytest]&gt; select * from tbl1;
++----+------+
+| id | name |
++----+------+
+|  1 | a1   |
+|  3 | a2   |
+|  4 | a1   |
+|  6 | a2   |
++----+------+
+</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shensir.info/2017/06/12/Maradb主从复制/" data-id="cjb05oymk00039fzuxyoayeq4" class="article-share-link">Share</a>
+      <a data-url="https://shensir.info/2017/06/12/Maradb主主复制/" data-id="cjb07228n0003gezuc1f5ixj4" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mariadb/">Mariadb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/主从复制/">主从复制</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Maradb/">Maradb</a></li></ul>
 
     </footer>
   </div>
@@ -1456,7 +1456,7 @@ grant all on *.*  to  root@&#39;proxysql ip&#39; identified by &#39;rootpw&#39;;
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shensir.info/2017/06/12/ProxySQL1.3.6配置/" data-id="cjb05oymr000a9fzu2akp3j0q" class="article-share-link">Share</a>
+      <a data-url="https://shensir.info/2017/06/12/ProxySQL1.3.6配置/" data-id="cjb07228v000agezujwuk9i15" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ProxySQL/">ProxySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/中间件/">中间件</a></li></ul>
@@ -1587,7 +1587,7 @@ grant all on *.*  to  root@&#39;proxysql ip&#39; identified by &#39;rootpw&#39;;
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shensir.info/2017/05/25/http_header/" data-id="cjb05oyn2000w9fzuq0256zzt" class="article-share-link">Share</a>
+      <a data-url="https://shensir.info/2017/05/25/http_header/" data-id="cjb072299000wgezudmo0ncb9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP-HEADER/">HTTP HEADER</a></li></ul>
@@ -1819,7 +1819,7 @@ tomcat2配置与1除测试页外一致
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shensir.info/2017/05/25/Tomcat session共享/" data-id="cjb05oyms000c9fzuhuwsld3j" class="article-share-link">Share</a>
+      <a data-url="https://shensir.info/2017/05/25/Tomcat session共享/" data-id="cjb07228w000cgezuqqjzfsbm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/session/">session</a></li></ul>
@@ -1977,7 +1977,7 @@ haproxy 2 proxy配置与 1一致
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shensir.info/2017/05/18/web站点的动静分离及高可用/" data-id="cjb05oynm00219fzuk4zbbcqg" class="article-share-link">Share</a>
+      <a data-url="https://shensir.info/2017/05/18/web站点的动静分离及高可用/" data-id="cjb07229q0024gezu1140lasg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Haproxy/">Haproxy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Keepalived/">Keepalived</a></li></ul>
@@ -2220,7 +2220,7 @@ HTTP_GET|SSL_GET {
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://shensir.info/2017/05/15/keepalived/" data-id="cjb05oyn9001d9fzursyv2nga" class="article-share-link">Share</a>
+      <a data-url="https://shensir.info/2017/05/15/keepalived/" data-id="cjb07229e001dgezui3jv8hhz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/keepalived/">keepalived</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/负载均衡/">负载均衡</a></li></ul>
@@ -2291,7 +2291,7 @@ HTTP_GET|SSL_GET {
           </li>
         
           <li>
-            <a href="/2017/06/12/Maradb主主复制/">Maradb主主复制</a>
+            <a href="/2017/06/12/Maradb主从复制/">Maradb主从复制</a>
           </li>
         
           <li>
@@ -2303,7 +2303,7 @@ HTTP_GET|SSL_GET {
           </li>
         
           <li>
-            <a href="/2017/06/12/Maradb主从复制/">Maradb主从复制</a>
+            <a href="/2017/06/12/Maradb主主复制/">Maradb主主复制</a>
           </li>
         
       </ul>
