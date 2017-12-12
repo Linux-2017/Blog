@@ -1,254 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  
-  <title>dropbear编译安装 | Pursuit Blog&#39;s</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="编译安装dropbear安装准备  安装Development tools tar xvf dropbear.tar.bzip2  编译安装  ./configure –prefix=/usr/local/dropbear –sysconfdir=/etc/dropbear make &amp;amp;&amp;amp">
-<meta name="keywords" content="linux">
-<meta property="og:type" content="article">
-<meta property="og:title" content="dropbear编译安装">
-<meta property="og:url" content="https://linux-2017.github.io/NewBlog/2017/04/18/dropbear/index.html">
-<meta property="og:site_name" content="Pursuit Blog&#39;s">
-<meta property="og:description" content="编译安装dropbear安装准备  安装Development tools tar xvf dropbear.tar.bzip2  编译安装  ./configure –prefix=/usr/local/dropbear –sysconfdir=/etc/dropbear make &amp;amp;&amp;amp; make install  生成公钥并启动服务  /usr/local/dropbear/b">
-<meta property="og:updated_time" content="2017-12-09T13:48:00.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="dropbear编译安装">
-<meta name="twitter:description" content="编译安装dropbear安装准备  安装Development tools tar xvf dropbear.tar.bzip2  编译安装  ./configure –prefix=/usr/local/dropbear –sysconfdir=/etc/dropbear make &amp;amp;&amp;amp; make install  生成公钥并启动服务  /usr/local/dropbear/b">
-  
-    <link rel="alternate" href="/atom.xml" title="Pursuit Blog&#39;s" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-  <link rel="stylesheet" href="/NewBlog/css/style.css">
-  
-
+  <meta charset="UTF-8" />
+  <title>Pursuit Blog&#39;s</title>
+  <link rel="icon" href="favicon.ico"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="/NewBlog/css/ionicons.min.css">
+  <link rel="stylesheet" href="/NewBlog/css/milligram.min.css">
+  <link rel="stylesheet" href="/NewBlog/css/comfortaa.css">
+  <link rel="stylesheet" href="/NewBlog/css/source-sans-pro.css">
+  <link rel="stylesheet" href="/NewBlog/css/animate.min.css">
+  <link rel="stylesheet" href="/NewBlog/css/nprogress.css">
+  <link rel="stylesheet" href="/NewBlog/css/loaders.min.css">
+  <link rel="stylesheet" href="/NewBlog/css/atom-one-light.css">
+  <link rel="stylesheet" href="/NewBlog/css/app.css">
 </head>
-
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/NewBlog/" id="logo">Pursuit Blog&#39;s</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/NewBlog/">Home</a>
-        
-          <a class="main-nav-link" href="/NewBlog/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://linux-2017.github.io/NewBlog"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main"><article id="post-dropbear" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/NewBlog/2017/04/18/dropbear/" class="article-date">
-  <time datetime="2017-04-18T12:14:08.000Z" itemprop="datePublished">2017-04-18</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/NewBlog/categories/Linux/">Linux</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      dropbear编译安装
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="编译安装dropbear"><a href="#编译安装dropbear" class="headerlink" title="编译安装dropbear"></a>编译安装dropbear</h1><p><strong>安装准备</strong></p>
-<ol>
-<li>安装Development tools</li>
-<li>tar xvf dropbear.tar.bzip2</li>
-</ol>
-<p><strong>编译安装</strong></p>
-<ol>
-<li>./configure –prefix=/usr/local/dropbear –sysconfdir=/etc/dropbear</li>
-<li>make &amp;&amp; make install</li>
-</ol>
-<p><strong>生成公钥并启动服务</strong></p>
-<ol>
-<li>/usr/local/dropbear/bin/dropbearkey -t rsa|dss|ecdsa -f /etc/dropbear/dropbear_rsa_host_key -s 2048</li>
-<li>dropbear -p 2222 -F -E 前台运行</li>
-<li>dropbear -p 2222 后台</li>
-</ol>
-<p><strong>测试</strong></p>
-<blockquote>
-<p>ssh -p 2222 root@ip_address</p>
-<p>dbclient -p 2222 root@ip_address</p>
-</blockquote>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://linux-2017.github.io/NewBlog/2017/04/18/dropbear/" data-id="cjb3hkfca000p35zuf8vh2aoh" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/NewBlog/tags/linux/">linux</a></li></ul>
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/NewBlog/2017/04/20/httpd-notes/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          httpd常见指令及其配置
-        
-      </div>
-    </a>
-  
-  
-    <a href="/NewBlog/2017/04/18/bind编译安装/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">编译安装bind</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/NewBlog/categories/HTTP-HEADER/">HTTP HEADER</a></li><li class="category-list-item"><a class="category-list-link" href="/NewBlog/categories/Haproxy/">Haproxy</a></li><li class="category-list-item"><a class="category-list-link" href="/NewBlog/categories/Keepalived/">Keepalived</a></li><li class="category-list-item"><a class="category-list-link" href="/NewBlog/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/NewBlog/categories/Tomcat/">Tomcat</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/Ca/">Ca</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/Fastdfs/">Fastdfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/HTTP-HEADER/">HTTP HEADER</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/Haproxy/">Haproxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/Http/">Http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/Httpd/">Httpd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/Https/">Https</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/Iptables/">Iptables</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/Keepalived/">Keepalived</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/Maradb/">Maradb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/Mariadb/">Mariadb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/MogileFS/">MogileFS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/Notes/">Notes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/ProxySQL/">ProxySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/bind/">bind</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/keepalived/">keepalived</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/lvs/">lvs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/modules/">modules</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/nfs/">nfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/session/">session</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/中间件/">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/主从复制/">主从复制</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/分布式文件系统/">分布式文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/基础命令/">基础命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/文件共享/">文件共享</a></li><li class="tag-list-item"><a class="tag-list-link" href="/NewBlog/tags/负载均衡/">负载均衡</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/NewBlog/tags/Ca/" style="font-size: 10px;">Ca</a> <a href="/NewBlog/tags/Fastdfs/" style="font-size: 10px;">Fastdfs</a> <a href="/NewBlog/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/NewBlog/tags/HTTP-HEADER/" style="font-size: 10px;">HTTP HEADER</a> <a href="/NewBlog/tags/Haproxy/" style="font-size: 10px;">Haproxy</a> <a href="/NewBlog/tags/Http/" style="font-size: 13.33px;">Http</a> <a href="/NewBlog/tags/Httpd/" style="font-size: 10px;">Httpd</a> <a href="/NewBlog/tags/Https/" style="font-size: 13.33px;">Https</a> <a href="/NewBlog/tags/Iptables/" style="font-size: 10px;">Iptables</a> <a href="/NewBlog/tags/Keepalived/" style="font-size: 10px;">Keepalived</a> <a href="/NewBlog/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/NewBlog/tags/Maradb/" style="font-size: 10px;">Maradb</a> <a href="/NewBlog/tags/Mariadb/" style="font-size: 13.33px;">Mariadb</a> <a href="/NewBlog/tags/MogileFS/" style="font-size: 10px;">MogileFS</a> <a href="/NewBlog/tags/Notes/" style="font-size: 13.33px;">Notes</a> <a href="/NewBlog/tags/ProxySQL/" style="font-size: 10px;">ProxySQL</a> <a href="/NewBlog/tags/bind/" style="font-size: 10px;">bind</a> <a href="/NewBlog/tags/keepalived/" style="font-size: 13.33px;">keepalived</a> <a href="/NewBlog/tags/linux/" style="font-size: 16.67px;">linux</a> <a href="/NewBlog/tags/lvs/" style="font-size: 10px;">lvs</a> <a href="/NewBlog/tags/modules/" style="font-size: 10px;">modules</a> <a href="/NewBlog/tags/nfs/" style="font-size: 10px;">nfs</a> <a href="/NewBlog/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/NewBlog/tags/session/" style="font-size: 10px;">session</a> <a href="/NewBlog/tags/web/" style="font-size: 13.33px;">web</a> <a href="/NewBlog/tags/中间件/" style="font-size: 10px;">中间件</a> <a href="/NewBlog/tags/主从复制/" style="font-size: 10px;">主从复制</a> <a href="/NewBlog/tags/分布式文件系统/" style="font-size: 10px;">分布式文件系统</a> <a href="/NewBlog/tags/基础命令/" style="font-size: 10px;">基础命令</a> <a href="/NewBlog/tags/文件共享/" style="font-size: 10px;">文件共享</a> <a href="/NewBlog/tags/负载均衡/" style="font-size: 13.33px;">负载均衡</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/NewBlog/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/NewBlog/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/NewBlog/archives/2017/04/">April 2017</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/NewBlog/2017/06/12/Maradb主主复制/">Maradb主主复制</a>
-          </li>
-        
-          <li>
-            <a href="/NewBlog/2017/06/12/Mariadb半同步复制及复制过滤器/">Mariadb半同步复制及复制过滤器</a>
-          </li>
-        
-          <li>
-            <a href="/NewBlog/2017/06/12/Maradb主从复制/">Maradb主从复制</a>
-          </li>
-        
-          <li>
-            <a href="/NewBlog/2017/06/12/MogileFS的安装配置/">MogileFS的安装配置</a>
-          </li>
-        
-          <li>
-            <a href="/NewBlog/2017/06/12/Fastdfs安装配置/">Fastdfs安装配置</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2017 Pursuit<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/NewBlog/" class="mobile-nav-link">Home</a>
-  
-    <a href="/NewBlog/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" href="/NewBlog/fancybox/jquery.fancybox.css">
-  <script src="/NewBlog/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/NewBlog/js/script.js"></script>
-
-  </div>
+  <div id="app"></div>
+  <script type="text/javascript">
+    window.root = "/NewBlog/"
+  </script>
+  <script src="/NewBlog/js/manifest.js"></script>
+  <script src="/NewBlog/js/vendor.js"></script>
+  <script src="/NewBlog/js/app.js"></script>
 </body>
 </html>
